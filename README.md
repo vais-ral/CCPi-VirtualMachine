@@ -24,3 +24,5 @@ Open VirtualBox desktop and work with VM. In order to exchange files between gue
 - `vagrant ssh` - connects to the VM - only console access via ssh.
 - `vagrant halt` - shutdowns the VM.
 - `vagrant up` - launched for the second and other time it will boot into existing VM in several seconds.
+
+![Vagrant up screenshot](/vagrantupscreen.gif)
