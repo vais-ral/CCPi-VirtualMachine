@@ -16,11 +16,11 @@ conda install -y -c ccpi -c conda-forge ccpi-preprocessing ccpi-reconstruction c
 #fix preprocessing library 
 sed -i -e 's/axisbg/facecolor/g' $INSTALLDIR/lib/python3.5/site-packages/ccpi/preprocessing/beamhardening/carouselUtils.py
 
-if grep -Fxq "conda.sh" ~/.bashrc
+if grep -Fxq "conda.sh" /home/vagrant/.bashrc
 then
   echo conda already set
 else
-  echo . $INSTALLDIR/etc/profile.d/conda.sh >> ~/.bashrc
-  echo export PATH=\$PATH:$INSTALLDIR/bin >> ~/.bashrc
+  echo . $INSTALLDIR/etc/profile.d/conda.sh >> /home/vagrant/.bashrc
+  echo export PATH=\$PATH:$INSTALLDIR/bin >> /home/vagrant/.bashrc
 fi
 
