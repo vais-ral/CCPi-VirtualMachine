@@ -21,6 +21,7 @@ vagrant up
 
 ## After installation
 Open VirtualBox desktop and work with VM. The CCPi installation of Python 3.7.1 and all CCPi dependent modules are present at `/opt/ccpi/` directory, PATH environment is set for BASH. In order to exchange files between guest and host, the `/vagrant` is mapped to guest path of the `CCPi-VirtualMachine` directory. 
+Follow https://cil.readthedocs.io and binary installation option for PATH `/opt/ccpi`.
 
 - `vagrant ssh` - connects to the VM - only console access via ssh.
 - `vagrant halt` - shutdowns the VM.
