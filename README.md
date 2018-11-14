@@ -17,7 +17,16 @@ vagrant up
 ```
 - `git clone` - clones this repository into your preferred location 
 - `cd tomographic-imaging-vm` - changes dir to the repository directory
-- `vagrant up` - for the first time it downloads and boots minimal Scientific Linux 7 with GUI environment (XFCE) (600 MB) from app.vagrantup.com and installs CCPi from conda. First boot provisions the system and takes 17 and more minutes. It configures the ssh on guest and host to accept password-less login. It creates default shared folder `tomographic-imaging-vm` which is shared in quest as `\vagrant`. 
+- `vagrant up` - for the first time it downloads and boots minimal Scientific Linux 7 with GUI environment (XFCE) (600 MB) from app.vagrantup.com and installs CCPi from conda. First boot provisions the system and takes around 15 minutes (depending on connection and HW it may take longer). It configures the ssh on guest and host to accept password-less login for vagrant user. It creates default shared folder `tomographic-imaging-vm` which is shared in quest as `\vagrant`. 
+
+## Installation from sources
+This option will use same VM template, but installs the CCPi packages from sources. Modify the `bootstrapsrc.sh` in order to build or ommit particular packages
+```bash
+git clone https://github.com/TomasKulhanek/tomographic-imaging-vm
+cd tomographic-imaging-vm
+cd vm-from-sources
+vagrant up
+```
 
 ## After installation
 Open VirtualBox desktop and work with VM. In order to exchange files between guest and host, the `/vagrant` is mapped to guest path of the `tomographic-imaging-vm` directory.

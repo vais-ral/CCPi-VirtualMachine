@@ -2,17 +2,17 @@
 INSTALLDIR=/opt/ccpi
 sudo yum install -y wget bzip2
 if [ ! -f Miniconda3-latest-Linux-x86_64.sh ]; then
-  wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+  wget -q https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
   chmod +x Miniconda3-latest-Linux-x86_64.sh
 fi
 sudo mkdir -p /opt/ccpi
 sudo chown vagrant:vagrant /opt/ccpi
 ./Miniconda3-latest-Linux-x86_64.sh -u -b -p $INSTALLDIR
 PATH=$PATH:$INSTALLDIR/bin
-conda create -y --name py3 python=3
+conda create -q -y --name py3 python=3
 conda activate py3
 #preprocessing reconstruction quantification segmentation regularisation
-conda install -y -c ccpi -c conda-forge ccpi-preprocessing ccpi-reconstruction ccpi-quantification ccpi-segmentation ccpi-regulariser numpy=1.12
+conda install -q -y -c ccpi -c conda-forge ccpi-preprocessing ccpi-reconstruction ccpi-quantification ccpi-segmentation ccpi-regulariser numpy=1.12
 #fix preprocessing library 
 sed -i -e 's/axisbg/facecolor/g' $INSTALLDIR/lib/python3.5/site-packages/ccpi/preprocessing/beamhardening/carouselUtils.py
 
@@ -22,5 +22,9 @@ then
 else
   echo . $INSTALLDIR/etc/profile.d/conda.sh >> /home/vagrant/.bashrc
   echo export PATH=\$PATH:$INSTALLDIR/bin >> /home/vagrant/.bashrc
+  echo echo "CCPi is installed in 'py3' conda environment. To activate it type:\n  conda activate py3" >> /home/vagrant/.bashrc
+  #echo conda activate py3 >> /home/vagrant/.bashrc  
 fi
+
+echo "CCPi installed. Connect to VM using `vagrant ssh` or go to the VM desktop.\nCCPi is installed in 'py3' conda environment.  To activate it type:\n  conda activate py3"
 
