@@ -1,18 +1,18 @@
-# tomographic-imaging-vm
-Virtual machine with installed CCPi software for tomographic imaging. VM includes separate environment with Python 3.5 and all CCPi repositories installed using `conda` tool at `/opt/ccpi` path.
+# CCPi Virtual Machine
+This repository contains scripts to create virtual machine with installed CCPi software for tomographic imaging from scratch. VM includes separate environment with Python 3.7.1 and all CCPi repositories installed using `conda` tool at `/opt/ccpi` path.
+Currently preprocessing, reconstruction, quantification, segmentation and regularisation are present.
 
-## Brief installation instruction from source codes 
-Requirement: [VirtualBox](https://www.virtualbox.org/wiki/Downloads) tested version 5.2.8, [Vagrant](https://www.vagrantup.com/downloads.html) tested version 2.1.1. Some OS has their own distribution of vagrant and virtualbox - so use `yum install vagrant virtualbox` OR `apt install vagrant virtualbox`
-
-Minimal: 1 CPU, 2 GB RAM, 5-50GB disk space.
-
-OS: Any which supported by VirtualBox or Vagrant (Windows 7,windows 10, Ubuntu 16.04 tested)
+## Brief installation instruction 
+Requirement: 
+- HW: 1 CPU, 2 GB RAM, 5-50GB disk space.
+- OS: Any OS supported by VirtualBox and Vagrant tool (tested on Windows 7,Windows 10, Ubuntu 16.04)
+- SW: Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](https://www.vagrantup.com/downloads.html) tested version 2.1.1. Some OS has their own distribution of vagrant and virtualbox: `yum install vagrant virtualbox` OR `apt install vagrant virtualbox`.
 
 Then type in your command line:
 
 ```bash
-git clone https://github.com/TomasKulhanek/tomographic-imaging-vm
-cd tomographic-imaging-vm
+git clone https://github.com/vais-ral/CCPi-VirtualMachine.git
+cd CCPi-VirtualMachine
 vagrant up
 ```
 - `git clone` - clones this repository into your preferred location 
@@ -29,7 +29,9 @@ vagrant up
 ```
 
 ## After installation
-Open VirtualBox desktop and work with VM. In order to exchange files between guest and host, the `/vagrant` is mapped to guest path of the `tomographic-imaging-vm` directory.
+Open VirtualBox desktop and work with VM. The CCPi installation of Python 3.7.1 and all CCPi dependent modules are present at `/opt/ccpi/` directory, PATH environment is set for BASH. In order to exchange files between guest and host, the `/vagrant` is mapped to guest path of the `CCPi-VirtualMachine` directory. 
+Follow https://cil.readthedocs.io and binary installation option for PATH `/opt/ccpi`.
+
 - `vagrant ssh` - connects to the VM - only console access via ssh.
 - `vagrant halt` - shutdowns the VM.
 - `vagrant up` - launched for the second and other time it will boot into existing VM in several seconds.
