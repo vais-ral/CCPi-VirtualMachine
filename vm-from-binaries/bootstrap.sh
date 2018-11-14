@@ -21,10 +21,11 @@ then
   echo conda already set
 else
   echo . $INSTALLDIR/etc/profile.d/conda.sh >> /home/vagrant/.bashrc
-  echo export PATH=\$PATH:$INSTALLDIR/bin >> /home/vagrant/.bashrc
-  echo echo "CCPi is installed in 'py3' conda environment. To activate it type:\n  conda activate py3" >> /home/vagrant/.bashrc
-  #echo conda activate py3 >> /home/vagrant/.bashrc  
+  #echo export PATH=\$PATH:$INSTALLDIR/bin >> /home/vagrant/.bashrc
+  echo conda activate py3 >> /home/vagrant/.bashrc
+  echo echo -e "CCPi is installed into py3 environment. 'py3' is now activated. To deactivate, type:\\nsource deactivate" >> /home/vagrant/.bashrc
+
 fi
 
-echo "CCPi installed. Connect to VM using `vagrant ssh` or go to the VM desktop.\nCCPi is installed in 'py3' conda environment.  To activate it type:\n  conda activate py3"
+echo "CCPi installed. Connect to VM using 'vagrant ssh' or use VirtualBox to see the VM desktop."
 
