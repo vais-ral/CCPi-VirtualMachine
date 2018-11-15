@@ -28,9 +28,9 @@ conda install -q -y numpy matplotlib scipy
 conda install -q -y -c conda-forge tifffile
 # preprocesing from sources
 cd $INSTALLDIR
-svn co https://ccpforge.cse.rl.ac.uk/svn/tomo_bhc/branches/release01 carouselFit
+svn co https://ccpforge.cse.rl.ac.uk/svn/tomo_bhc/branches/release01 CCPi-Preprocessing
 # apply fix for python 3, matplotlib
-sed -i -e 's/axisbg/facecolor/g' $INSTALLDIR/carouselFit/src/carouselUtils.py
+sed -i -e 's/axisbg/facecolor/g' $INSTALLDIR/CCPi-Preprocessing/src/carouselUtils.py
 
 # regularization prerequisites - c/c++ cmake3 cython
 yum install -y cmake3 gcc gcc-c++
@@ -43,5 +43,12 @@ mkdir CCPi-Regularisation-Toolkit-tmp-build
 cd CCPi-Regularisation-Toolkit-tmp-build
 cmake3 ../CCPi-Regularisation-Toolkit-src -DCONDA_BUILD=OFF -DBUILD_MATLAB_WRAPPER=OFF -DBUILD_PYTHON_WRAPPER=ON -DBUILD_CUDA=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALLDIR/CCPi-Regularisation-Toolkit -DPYTHON_EXECUTABLE=$INSTALLDIR/bin/python -DPYTHON_INCLUDE_DIR=$INSTALLDIR/include/python3.7m/ -DPYTHON_LIBRARY=$INSTALLDIR/lib/libpython3.7m.so
 make install
-echo "CCPi installed. Connect to VM using 'vagrant ssh' or use VirtualBox to see the VM desktop."
 
+#Reconstruction
+conda install -q -y conda-build boost
+cd $INSTALLDIR
+git clone https://github.com/vais-ral/CCPi-Reconstruction.git
+cd CCPi-Reconstruction
+conda build conda-recipe -c ccpi -c conda-forge --python 3.5 --numpy 1.12
+
+echo "CCPi installed. Connect to VM using 'vagrant ssh' or use VirtualBox to see the VM desktop."
