@@ -1,6 +1,6 @@
 #sudo in case this script is executed after installation
 INSTALLDIR=/opt/ccpi
-yum install -y wget bzip2 git gvim
+yum install -y wget bzip2
 if [ ! -f Miniconda3-latest-Linux-x86_64.sh ]; then
   wget -q https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
   chmod +x Miniconda3-latest-Linux-x86_64.sh
