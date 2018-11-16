@@ -1,5 +1,5 @@
 # CCPi Virtual Machine
-This repository contains scripts to create virtual machine with installed CCPi software for tomographic imaging from scratch. VM includes separate environment with Python 3.7.1 and all CCPi repositories installed using `conda` tool at `/opt/ccpi` path.
+This repository contains scripts to create virtual machine with installed CCPi software for tomographic imaging from scratch. VM includes virtual environment with Python 3.x and all CCPi repositories installed using `conda` tool at `/opt/ccpi` path.
 Currently preprocessing, reconstruction, quantification, segmentation and regularisation are present.
 
 ## Brief installation from binaries
@@ -20,12 +20,21 @@ vagrant up
 - `cd CCPi-VirtualMachine` - changes dir to the repository directory
 - `vagrant up` - for the first time it downloads and boots minimal Scientific Linux 7 with GUI environment (XFCE) (600 MB) from app.vagrantup.com and installs CCPi from conda. First boot provisions the system and takes around 15 minutes (depending on connection and HW it may take longer). It configures the ssh on guest and host to accept password-less login for vagrant user. It creates default shared folder in guest VM `\vagrant` which is shared to host's `CCPI-VirtualMachine`. 
 
+## Installation from binaries
+This default installation of ccpi from binaries 
+```bash
+git clone https://github.com/TomasKulhanek//CCPi-VirtualMachine.git
+cd CCPi-VirtualMachine
+cd ccpi-vm-from-binaries
+vagrant up
+```
+
 ## Installation from sources
 This option will use same VM template, but installs the CCPi packages from sources. Modify the `bootstrapsrc.sh` in order to build or ommit particular packages
 ```bash
 git clone https://github.com/TomasKulhanek//CCPi-VirtualMachine.git
 cd CCPi-VirtualMachine
-cd vm-from-sources
+cd ccpi-vm-from-sources
 vagrant up
 ```
 
