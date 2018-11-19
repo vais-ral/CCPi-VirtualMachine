@@ -186,5 +186,5 @@ systemctl enable httpd
 ## curl https://raw.githubusercontent.com/automl/auto-sklearn/master/requirements.txt | xargs -n 1 -L 1 pip install
 ## pip install auto-sklearn
 
-echo "CCPi installed. Connect to VM using 'vagrant ssh' or use VirtualBox to see the VM desktop. Jupyter started at port 8901, redirected to be server at 80/jupyter by apache"
+echo "CCPi installed. Connect to VM using 'vagrant ssh' or use VirtualBox to see the VM desktop. Jupyter nb available. Guest port 80 redirected to 8080. Open your browser at http://localhost:8080/jupyter"
 

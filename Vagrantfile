@@ -11,4 +11,5 @@ Vagrant.configure("2") do |config|
      vb.cpus = "2"
   end
   config.vm.provision "shell",  path: "vm-from-binaries/bootstrap.sh"
+  config.vm.synced_folder "./vm-from-binaries", "/vagrant"
 end
