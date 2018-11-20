@@ -126,15 +126,18 @@ cd $DIR
 conda install -y jupyter pymc3 r-irkernel r=3.3.2 tornado=4.5.3 
 conda install -y -c rdkit rdkit
 
+# set SELINUX to disabled
+sed -i 's/enforcing/disabled/g' /etc/selinux/config /etc/selinux/config
+setenforce 0
 ## copy jupyter conf with no passwd
 mkdir /home/vagrant/.jupyter
-cp /vagrant/jupyter_notebook_config /home/vagrant/.jupyter
+cp /vagrant/jupyter_notebook_config.py /home/vagrant/.jupyter
 ## start jupyter job on port 8901, and context /jupyter will be redirected in apache (port 80) 
 yum install -y httpd
-systemctl start httpd
 systemctl enable httpd
+systemctl start httpd
 
-/vagrant/startJupyter.sh add vagrant 8901 jupyter
+/vagrant/startstopJupyter.sh add vagrant 8901 /jupyter /vagrant/jupyter.log
 ## # machine learning course
 ## conda install -y scikit-learn seaborn keras mkl pandas pillow pydot scipy tensorflow 
 ## 
