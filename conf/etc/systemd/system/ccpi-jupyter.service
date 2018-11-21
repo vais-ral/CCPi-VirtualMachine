@@ -1,0 +1,17 @@
+[Unit]
+Description=Jupyter notebook
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+PIDFile=/var/run/jupyter-nb.pid
+User=vagrant
+ExecStart=/opt/ccpi/bin/jupyterinapache.sh add vagrant 8901 /jupyter
+ExecStop=/opt/ccpi/bin/jupyterinapache.sh remove vagrant 8901 /jupyter
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=jupyter
+WorkingDirectory=/vagrant
+
+[Install]
+WantedBy=multi-user.target

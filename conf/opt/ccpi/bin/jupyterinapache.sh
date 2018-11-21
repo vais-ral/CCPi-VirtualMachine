@@ -55,7 +55,7 @@ function setjupyterurl {
 
 function removeapacheproxy {
  L1=`grep -n -m 1 "\<Location $1" $HTTPD_CONF | cut -f1 -d:`
- if [ $L1 -gt 0 ]; then
+ if [ "$L1" -gt "0" ]; then
    echo removing apache proxy $1
    echo from row $L1
    let L2=$L1+9
@@ -101,32 +101,32 @@ if [ $1 == 'remove' ]; then
 fi
 
 if [ $1 == 'add' ]; then
-  WORKDIR=/srv/virtualfolder/$2
-  if [ -d $WORKDIR ]; then
-    echo working directory exists
-  else
-    echo trying to create working directory, it\'ll be empty
-    mkdir -p $WORKDIR
-  fi
-  if [ -d $WORKDIR ]; then
-    cd $WORKDIR
+  #WORKDIR=/srv/virtualfolder/$2
+  #if [ -d $WORKDIR ]; then
+  #  echo working directory exists
+  #else
+  #  echo trying to create working directory, it\'ll be empty
+  #  mkdir -p $WORKDIR
+  #fi
+  #if [ -d $WORKDIR ]; then
+  #  cd $WORKDIR
     addapacheproxy http://localhost:$3 $4
     setjupyterurl $4
     if [ -z $5 ]; then
       echo launching jupyter without logs
       #source /opt/jupyter/bin/activate py3
-      $INSTALLDIR/bin/jupyter notebook --port $3 --no-browser &
+      $INSTALLDIR/envs/py3/bin/jupyter notebook --port $3 --no-browser &
     else
       echo launching jupyter log to $5
       #source /opt/jupyter/bin/activate py3
-      $INSTALLDIR/bin/jupyter notebook --port $3 --no-browser >$5 2>&1 &
+      $INSTALLDIR/envs/py3/bin/jupyter notebook --port $3 --no-browser >$5 2>&1 &
     fi
     exit
-  else
-    echo Directory $WORKDIR does not exist.
-    help
-    exit 1
-  fi
+  #else
+  #  echo Directory $WORKDIR does not exist.
+  #  help
+  #  exit 1
+  #fi
 fi
 
 help

@@ -1,4 +1,3 @@
-#!/usr/bin/env bash 
 # Script that install various packages needed for Gadgetron, SIRF etc
 # on rhel-based system (CENTOS, Scientific Linux).
 #
