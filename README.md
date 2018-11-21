@@ -21,7 +21,8 @@ vagrant up
 - `vagrant up` - for the first time it downloads and boots minimal Scientific Linux 7 with GUI environment (XFCE) (600 MB) from app.vagrantup.com and installs CCPi from conda. First boot provisions the system and takes around 15 minutes (depending on connection and HW it may take longer). It configures the ssh on guest and host to accept password-less login for vagrant user. It creates default shared folder in guest VM `\vagrant` which is shared to host's `CCPI-VirtualMachine`. 
 
 ## Installation from binaries
-This default installation of ccpi from binaries 
+This is same as default installation.
+
 ```bash
 git clone https://github.com/TomasKulhanek//CCPi-VirtualMachine.git
 cd CCPi-VirtualMachine
@@ -30,7 +31,7 @@ vagrant up
 ```
 
 ## Installation from sources
-This option will use same VM template, but installs the CCPi packages from sources. Modify the `bootstrapsrc.sh` in order to build or ommit particular packages
+This option will use same VM template, but installs the CCPi packages from sources. Modify the `scripts/bootstrapsrc.sh` in order to build or ommit particular packages.
 ```bash
 git clone https://github.com/TomasKulhanek//CCPi-VirtualMachine.git
 cd CCPi-VirtualMachine
@@ -39,10 +40,16 @@ vagrant up
 ```
 
 ## After installation
-Open VirtualBox desktop and work with VM. The CCPi installation of Python 3.7.x and all CCPi dependent modules are present at `/opt/ccpi/` directory, PATH environment is set for BASH. In order to exchange files between guest and host, the `/vagrant` is mapped to guest path of the `CCPi-VirtualMachine` directory. 
+To access terminal of virtual machine, type:
+- `vagrant ssh` - connects to the VM - only console access via ssh.
+
+To access desktop, open VirtualBox and click the running virtual machine to show accees it's desktop.
+
+To access web UI of jupyter notebook, go http://localhost:8080 (the port 8080 is by default forwarded to guest port 80, consult exact port in Vagrantfile).
+
+The CCPi installation of Python 3.x and all CCPi dependent modules are present at `/opt/ccpi/` directory, PATH environment is set for BASH. In order to exchange files between guest and host, the `/vagrant` is mapped to guest path of the `CCPi-VirtualMachine` directory. 
 Follow https://cil.readthedocs.io and binary installation option for PATH `/opt/ccpi`.
 
-- `vagrant ssh` - connects to the VM - only console access via ssh.
 - `vagrant halt` - shutdowns the VM.
 - `vagrant up` - launched for the second and other time it will boot into existing VM in several seconds.
 
