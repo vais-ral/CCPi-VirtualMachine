@@ -1,17 +1,21 @@
-## Jupyter in SL7
+echo installing Jupyter into SL7
 ## set DIR and VERSION e.g. to point to another directory
+
 DIR=$INSTALLDIR
 VERSION=jupyter
 
-#sudo in case this script is executed after installation
-#sudo yum install -y wget bzip2
-
+# sudo in case this script is executed after installation
+# sudo yum install -y wget bzip2
+# 
 mkdir -p $DIR
 cd $DIR
 . $INSTALLDIR/etc/profile.d/conda.sh
 conda activate py3
+
+echo installing jupyter packages
 conda install -q -y jupyter pymc3 r-irkernel r=3.3.2 tornado=4.5.3 
-conda install -q -y -c rdkit rdkit
+#echo installing rdkit
+#conda install -q -y -c rdkit rdkit
 
 ## # machine learning course
 ## conda install -y scikit-learn seaborn keras mkl pandas pillow pydot scipy tensorflow 
