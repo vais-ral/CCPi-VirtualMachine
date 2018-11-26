@@ -119,5 +119,7 @@ cd $INSTALLDIR
 ##    python -m pip install jupyter
 ##    python -m pip install spyder
 git clone https://github.com/CCPPETMR/CCPPETMR_VM.git CCPPETMR
-bash CCPPETMR/devel/CCPPETMR_VM/scripts/UPDATE.sh
+# in SL7, cmake3 is alias for cmake
+sudo ln -s /usr/bin/cmake3 /usr/bin/cmake
+$INSTALLDIR/CCPPETMR/scripts/UPDATE.sh
 ##    chown -R sirfuser:users /home/sirfuser/
