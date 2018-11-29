@@ -4,8 +4,10 @@ echo Bootstrapping Conda
 /vagrant/scripts/bootstrapconda.sh
 echo Bootstrapping Jupyter NB
 /vagrant/scripts/bootstrapjupyter.sh
+
 echo Boostrapping CCPI
 /vagrant/scripts/bootstrapccpi.sh
+
 echo Bootstrapping CCPPETMR
 /vagrant/scripts/bootstrappetmr.sh
 

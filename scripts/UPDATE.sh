@@ -141,6 +141,7 @@ SuperBuild(){
 	  -DUSE_SYSTEM_Armadillo=On \
 	  -DUSE_SYSTEM_FFTW3=On \
 	  -DUSE_SYSTEM_HDF5=ON \
+    -DUSE_SYSTEM_ACE=ON \
 	  -DBUILD_siemens_to_ismrmrd=On \
 	  -DDEVEL_BUILD=OFF
   make -j${num_parallel}

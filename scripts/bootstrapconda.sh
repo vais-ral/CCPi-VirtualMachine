@@ -19,3 +19,7 @@ else
   echo conda activate py3 >> /home/vagrant/.bashrc
   echo echo -e \"CCPi is installed into py3 environment.\\n'py3' is now activated.\\nTo deactivate, type:\\n  conda deactivate\" >> /home/vagrant/.bashrc
 fi
+conda config --add channels ccpi conda-forge paskino 
+conda install -q -y jupyter pymc3 r-irkernel r=3.3.2 tornado=4.5.3 ccpi-preprocessing ccpi-reconstruction ccpi-quantification ccpi-segmentation ccpi-regulariser scipy docopt numpy h5py matplotlib libxml2 psutil tk nose ace 
+
+
