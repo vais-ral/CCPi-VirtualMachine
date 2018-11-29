@@ -81,7 +81,7 @@ sudo yum install -y git cmake3 gcc gcc-c++
 echo "Installing Gadgetron pre-requisites..."
 
 sudo yum install -y hdf5-devel boost boost-devel gcc gcc-c++ make fftw-devel hdf5 hdf5-devel \
- lapack-devel libxml2-devel libxslt-devel armadillo-devel gtest-devel plplot-devel python-devel
+ lapack-devel libxml2-devel libxslt-devel armadillo-devel gtest-devel plplot-devel python-devel glibc
 
 # misssing h5utils, hdfview libace-dev g++ (c++?)
 #libhdf5-serial-dev git-core cmake libboost-all-dev build-essential libfftw3-dev h5utils \
@@ -99,7 +99,7 @@ sudo yum install -y swig
 # $SUDO apt-get install -y --no-install-recommends  python-scipy python-docopt  python-numpy python-h5py python-matplotlib python-libxml2 python-psutil python-tk python-nose
 conda activate py3
 conda install -y scipy docopt numpy h5py matplotlib libxml2 psutil tk nose 
-
+conda install -y -c paskino ace
 #echo "installing glog"
 # #$SUDO apt-get install -y libgoogle-glog-dev
 sudo yum install -y glog-devel
@@ -107,7 +107,7 @@ sudo yum install -y glog-devel
 #echo "installing pip for jupyter"
 # $SUDO apt-get install -y python-pip python-qt4
 
-cd $INSTALLDIR
+#cd $INSTALLDIR
 ## git clone https://github.com/CCPPETMR/CCPPETMR_VM.git CCPPETMR
 ## cd CCPPETMR_VM
 ##    bash $HOME/devel/CCPPETMR_VM/scripts/INSTALL_prerequisites_with_apt-get.sh
@@ -118,8 +118,10 @@ cd $INSTALLDIR
 ##    python -m pip install --upgrade pip
 ##    python -m pip install jupyter
 ##    python -m pip install spyder
-git clone https://github.com/CCPPETMR/CCPPETMR_VM.git CCPPETMR
+#git clone https://github.com/CCPPETMR/CCPPETMR_VM.git CCPPETMR
 # in SL7, cmake3 is alias for cmake
 sudo ln -s /usr/bin/cmake3 /usr/bin/cmake
-$INSTALLDIR/CCPPETMR/scripts/UPDATE.sh
+# move temporarily? to this repository instead of another repository, just need this script 
+#$INSTALLDIR/CCPPETMR/scripts/UPDATE.sh -j 1
+/vagrant/scripts/UPDATE.sh -j 1
 ##    chown -R sirfuser:users /home/sirfuser/
