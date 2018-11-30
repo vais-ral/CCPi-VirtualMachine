@@ -13,6 +13,7 @@ cd $DIR
 conda activate py3
 
 echo installing jupyter packages
+## moved to bootstrapconda - to reduce installation time
 #conda install -q -y jupyter pymc3 r-irkernel r=3.3.2 tornado=4.5.3 
 #echo installing rdkit
 #conda install -q -y -c rdkit rdkit

@@ -98,6 +98,7 @@ sudo yum install -y swig
 #echo "Installing python libraries etc"
 # $SUDO apt-get install -y --no-install-recommends  python-scipy python-docopt  python-numpy python-h5py python-matplotlib python-libxml2 python-psutil python-tk python-nose
 conda activate py3
+## moved to bootstrapconda - to reduce installation time
 #conda install -y scipy docopt numpy h5py matplotlib libxml2 psutil tk nose 
 #conda install -y -c paskino ace
 #echo "installing glog"
