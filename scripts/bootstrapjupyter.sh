@@ -12,7 +12,11 @@ cd $DIR
 . $INSTALLDIR/etc/profile.d/conda.sh
 conda activate py3
 
-echo installing jupyter packages
+#echo installing jupyter packages
+#conda config --add channels ccpi conda-forge paskino 
+# installing all -as ccpi request some lower versions of libraries
+conda install -q -y -c ccpi -c conda-forge -c paskino jupyter pymc3 r-irkernel r=3.3.2 tornado=4.5.3 ccpi-preprocessing ccpi-reconstruction ccpi-quantification ccpi-segmentation ccpi-regulariser scipy docopt numpy h5py matplotlib libxml2 psutil tk nose ace 
+
 ## moved to bootstrapconda - to reduce installation time
 #conda install -q -y jupyter pymc3 r-irkernel r=3.3.2 tornado=4.5.3 
 #echo installing rdkit
