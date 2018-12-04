@@ -5,18 +5,26 @@ conda activate py3
 #yum install -y svn
 conda install -q -y -c conda-forge numpy matplotlib scipy tifffile conda-build
 # preprocesing from sources
-cd $INSTALLDIR
 #svn co https://ccpforge.cse.rl.ac.uk/svn/tomo_bhc/branches/release01 CCPi-Preprocessing
 # apply fix for python 3, matplotlib
 #sed -i -e 's/axisbg/facecolor/g' $INSTALLDIR/CCPi-Preprocessing/src/carouselUtils.py
 sudo yum install -y git cmake3 gcc gcc-c++ 
 sudo ln -s /usr/bin/cmake3 /usr/bin/cmake
 
+cd $INSTALLDIR
 git clone https://github.com/vais-ral/CCPi-PreProcessing
 cd CCPi-PreProcessing
 # apply fix for python 3, matplotlib
 sed -i -e 's/axisbg/facecolor/g' $INSTALLDIR/CCPi-Preprocessing/src/carouselUtils.py
+export CIL_VERSION=18.12
 conda build Wrappers/Python/conda-recipe
+
+cd $INSTALLDIR
+git clone https://github.com/vais-ral/CCPi-Regularisation-Toolkit
+cd CCPi-Regularisation-Toolkit
+export CIL_VERSION=18.12
+conda build Wrappers/Python/conda-recipe 
+#--numpy 1.12 --python 3.5
 
 
 # # regularization prerequisites - c/c++ cmake3 cython
