@@ -20,7 +20,7 @@ cd $SOURCEDIR
 git clone https://github.com/vais-ral/CCPi-PreProcessing
 cd CCPi-PreProcessing
 # apply fix for python 3, matplotlib
-sed -i -e 's/axisbg/facecolor/g' $INSTALLDIR/CCPi-Preprocessing/src/carouselUtils.py
+sed -i -e 's/axisbg/facecolor/g' $SOURCEDIR/CCPi-Preprocessing/src/carouselUtils.py
 export CIL_VERSION=18.12
 conda build Wrappers/Python/conda-recipe --python=3.5 --numpy=1.12
 
