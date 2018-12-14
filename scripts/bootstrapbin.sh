@@ -6,8 +6,6 @@ echo Bootstrapping Jupyter NB
 bash /vagrant/scripts/bootstrapjupyter.sh
 echo Boostrapping CCPI
 bash /vagrant/scripts/bootstrapccpi.sh
-echo Bootstrapping CCPPETMR
-bash /vagrant/scripts/bootstrappetmr.sh
 
 sudo chown -R vagrant:vagrant /home/vagrant/.Conda
 sudo chown -R vagrant:vagrant $INSTALLDIR
