@@ -1,15 +1,13 @@
 # installs ccpi from scratch
 export INSTALLDIR=/opt/ccpi
 echo Bootstrapping Conda
-/vagrant/scripts/bootstrapconda.sh
+bash /vagrant/scripts/bootstrapconda.sh
 echo Bootstrapping Jupyter NB
-/vagrant/scripts/bootstrapjupyter.sh
-
+bash /vagrant/scripts/bootstrapjupyter.sh
 echo Boostrapping CCPI
-/vagrant/scripts/bootstrapccpi.sh
-
+bash /vagrant/scripts/bootstrapccpi.sh
 echo Bootstrapping CCPPETMR
-/vagrant/scripts/bootstrappetmr.sh
+bash /vagrant/scripts/bootstrappetmr.sh
 
 sudo chown -R vagrant:vagrant /home/vagrant/.Conda
 sudo chown -R vagrant:vagrant $INSTALLDIR
