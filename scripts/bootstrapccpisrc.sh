@@ -1,5 +1,8 @@
 . $INSTALLDIR/etc/profile.d/conda.sh
 
+export SOURCEDIR=~/GitHub/
+mkdir -p ${SOURCEDIR}
+
 conda activate py3
 # Preprocessing prerequisites - svn git python numpy, matlplotlib scipy tifffile
 #yum install -y svn
@@ -11,21 +14,25 @@ conda install -q -y -c conda-forge numpy matplotlib scipy tifffile conda-build
 sudo yum install -y git cmake3 gcc gcc-c++ 
 sudo ln -s /usr/bin/cmake3 /usr/bin/cmake
 
-cd $INSTALLDIR
+#cd $INSTALLDIR
+cd $SOURCEDIR
 git clone https://github.com/vais-ral/CCPi-PreProcessing
 cd CCPi-PreProcessing
 # apply fix for python 3, matplotlib
 sed -i -e 's/axisbg/facecolor/g' $INSTALLDIR/CCPi-Preprocessing/src/carouselUtils.py
 export CIL_VERSION=18.12
-conda build Wrappers/Python/conda-recipe
+conda build Wrappers/Python/conda-recipe --python=3.5 --numpy=1.12
 
-cd $INSTALLDIR
+
+# cd $INSTALLDIR
+cd $SOURCEDIR
 git clone https://github.com/vais-ral/CCPi-Regularisation-Toolkit
 cd CCPi-Regularisation-Toolkit
 export CIL_VERSION=18.12
-conda build Wrappers/Python/conda-recipe 
+conda build Wrappers/Python/conda-recipe --python=3.5 --numpy=1.12
 #--numpy 1.12 --python 3.5
 
+conda install -y -c $INSTALLDIR/conda-bld/ ccpi-preprocessing=${CIL_VERSION}
 
 # # regularization prerequisites - c/c++ cmake3 cython
 # yum install -y git cmake3 gcc gcc-c++
@@ -50,16 +57,33 @@ conda build Wrappers/Python/conda-recipe
 # #conda install -q -y conda-build boost
 # conda install -q -y boost
 # cd $INSTALLDIR
-# git clone https://github.com/vais-ral/CCPi-Reconstruction.git
-# cd CCPi-Reconstruction
-# export CIL_VERSION=0.10.0
-# conda build recipes/library -c conda-forge -c ccpi
-# ## TODO 
-# conda install -y -c $INSTALLDIR/conda-bld/ cil_reconstruction
 
-# conda build Wrappers/python/conda-recipe -c conda-forge -c ccpi
-# conda install -y -c $INSTALLDIR/conda-bld/ ccpi-reconstruction
+cd $SOURCEDIR
+git clone https://github.com/vais-ral/CCPi-Reconstruction.git
+cd CCPi-Reconstruction
+# export CIL_VERSION=0.10.0
+conda build recipes/library -c conda-forge -c ccpi
+# ## TODO 
+conda install -y -c $INSTALLDIR/conda-bld/ cil_reconstruction=${CIL_VERSION}
+
+conda build Wrappers/python/conda-recipe -c conda-forge -c ccpi --python=3.5 --numpy=1.12
+conda install -y -c $INSTALLDIR/conda-bld/ ccpi-reconstruction=${CIL_VERSION}
 
 # #conda build Wrappers/python/conda-recipe -c ccpi -c conda-forge --python 3.5 --numpy 1.12
 # #conda install -c $INSTALLDIR/envs/py3/conda-bld/ ccpi-reconstruction 
 
+# Build Framework, Plugins, and Astra
+
+cd $SOURCEDIR
+git clone https://github.com/vais-ral/CCPi-Framework.git
+git clone https://github.com/vais-ral/CCPi-FrameworkPlugins.git
+git clone https://github.com/vais-ral/CCPi-Astra.git
+cd CCPi-Framework
+conda build Wrappers/Python/conda-recipe -c conda-forge -c ccpi --python=3.5 --numpy=1.12
+cd ../CCPi-FrameworkPlugins
+conda build Wrappers/Python/conda-recipe -c conda-forge -c ccpi --python=3.5 --numpy=1.12
+cd ../CCPi-Astra
+conda build Wrappers/Python/conda-recipe -c conda-forge -c ccpi --python=3.5 --numpy=1.12
+conda install -c ${INSTALLDIR}/conda-bld/ ccpi-framework=${CIL_VERSION}
+conda install -c ${INSTALLDIR}/conda-bld/ ccpi-plugins=${CIL_VERSION}
+conda install -c ${INSTALLDIR}/conda-bld/ ccpi-astra=${CIL_VERSION}
