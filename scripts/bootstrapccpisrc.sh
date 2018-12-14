@@ -1,6 +1,7 @@
 . $INSTALLDIR/etc/profile.d/conda.sh
 
 export SOURCEDIR=~/GitHub/
+export LOCALPKGDIR=${INSTALLDIR}/envs/py3/conda-bld/linux-64/
 mkdir -p ${SOURCEDIR}
 
 conda activate py3
@@ -32,7 +33,7 @@ export CIL_VERSION=18.12
 conda build Wrappers/Python/conda-recipe --python=3.5 --numpy=1.12
 #--numpy 1.12 --python 3.5
 
-conda install -y -c $INSTALLDIR/conda-bld/ ccpi-preprocessing=${CIL_VERSION}
+conda install -y -c ${LOCALPKGDIR} ccpi-preprocessing=${CIL_VERSION}
 
 # # regularization prerequisites - c/c++ cmake3 cython
 # yum install -y git cmake3 gcc gcc-c++
@@ -64,10 +65,10 @@ cd CCPi-Reconstruction
 # export CIL_VERSION=0.10.0
 conda build recipes/library -c conda-forge -c ccpi
 # ## TODO 
-conda install -y -c $INSTALLDIR/conda-bld/ cil_reconstruction=${CIL_VERSION}
+conda install -y -c ${LOCALPKGDIR} cil_reconstruction=${CIL_VERSION}
 
 conda build Wrappers/python/conda-recipe -c conda-forge -c ccpi --python=3.5 --numpy=1.12
-conda install -y -c $INSTALLDIR/conda-bld/ ccpi-reconstruction=${CIL_VERSION}
+conda install -y -c ${LOCALPKGDIR} ccpi-reconstruction=${CIL_VERSION}
 
 # #conda build Wrappers/python/conda-recipe -c ccpi -c conda-forge --python 3.5 --numpy 1.12
 # #conda install -c $INSTALLDIR/envs/py3/conda-bld/ ccpi-reconstruction 
@@ -84,6 +85,6 @@ cd ../CCPi-FrameworkPlugins
 conda build Wrappers/Python/conda-recipe -c conda-forge -c ccpi --python=3.5 --numpy=1.12
 cd ../CCPi-Astra
 conda build Wrappers/Python/conda-recipe -c conda-forge -c ccpi -c astra-toolbox --python=3.5 --numpy=1.12
-conda install -c ${INSTALLDIR}/conda-bld/ ccpi-framework=${CIL_VERSION}
-conda install -c ${INSTALLDIR}/conda-bld/ ccpi-plugins=${CIL_VERSION}
-conda install -c ${INSTALLDIR}/conda-bld/ -c astra-toolbox ccpi-astra=${CIL_VERSION}
+conda install -c ${LOCALPKGDIR} ccpi-framework=${CIL_VERSION}
+conda install -c ${LOCALPKGDIR} ccpi-plugins=${CIL_VERSION}
+conda install -c ${LOCALPKGDIR} -c astra-toolbox ccpi-astra=${CIL_VERSION}
