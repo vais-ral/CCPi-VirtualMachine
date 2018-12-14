@@ -1,6 +1,6 @@
 . $INSTALLDIR/etc/profile.d/conda.sh
 
-export SOURCEDIR=~/GitHub/
+export SOURCEDIR=/home/vagrant/GitHub/
 export LOCALPKGDIR=${INSTALLDIR}/envs/py3/conda-bld/linux-64/
 mkdir -p ${SOURCEDIR}
 
