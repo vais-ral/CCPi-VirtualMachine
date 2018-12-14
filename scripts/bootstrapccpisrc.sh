@@ -83,7 +83,7 @@ conda build Wrappers/Python/conda-recipe -c conda-forge -c ccpi --python=3.5 --n
 cd ../CCPi-FrameworkPlugins
 conda build Wrappers/Python/conda-recipe -c conda-forge -c ccpi --python=3.5 --numpy=1.12
 cd ../CCPi-Astra
-conda build Wrappers/Python/conda-recipe -c conda-forge -c ccpi --python=3.5 --numpy=1.12
+conda build Wrappers/Python/conda-recipe -c conda-forge -c ccpi -c astra-toolbox --python=3.5 --numpy=1.12
 conda install -c ${INSTALLDIR}/conda-bld/ ccpi-framework=${CIL_VERSION}
 conda install -c ${INSTALLDIR}/conda-bld/ ccpi-plugins=${CIL_VERSION}
-conda install -c ${INSTALLDIR}/conda-bld/ ccpi-astra=${CIL_VERSION}
+conda install -c ${INSTALLDIR}/conda-bld/ -c astra-toolbox ccpi-astra=${CIL_VERSION}
