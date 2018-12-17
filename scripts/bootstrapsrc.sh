@@ -1,5 +1,8 @@
 # installs ccpi from scratch
 export INSTALLDIR=/opt/ccpi
+export SOURCEDIR=/opt/ccpi-src
+export CIL_VERSION=18.12
+
 echo Bootstrapping Conda
 bash /vagrant/scripts/bootstrapconda.sh
 echo Bootstrapping CCPi from src
