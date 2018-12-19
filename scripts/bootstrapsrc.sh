@@ -1,11 +1,14 @@
 # installs ccpi from scratch
 export INSTALLDIR=/opt/ccpi
+export SOURCEDIR=/opt/ccpi-src
+export CIL_VERSION=18.12
+
 echo Bootstrapping Conda
-/vagrant/scripts/bootstrapconda.sh
+bash /vagrant/scripts/bootstrapconda.sh
 echo Bootstrapping Jupyter NB
 bash /vagrant/scripts/bootstrapjupyter.sh
 echo Bootstrapping CCPi from src
-/vagrant/scripts/bootstrapccpisrc.sh
+bash /vagrant/scripts/bootstrapccpisrc.sh
 
 #give vagrant ownership to INSTALLDIR
 chown -R vagrant:vagrant $INSTALLDIR
