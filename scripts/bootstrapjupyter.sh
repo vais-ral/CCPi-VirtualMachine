@@ -20,30 +20,31 @@ conda install -q -y -c ccpi -c conda-forge -c paskino jupyter pymc3 r-irkernel r
 ## moved to bootstrapconda - to reduce installation time
 #conda install -q -y jupyter pymc3 r-irkernel r=3.3.2 tornado=4.5.3 
 #echo installing rdkit
-#conda install -q -y -c rdkit rdkit
+# installing all
+conda install -q -y -c rdkit -c conda-forge rdkit scikit-learn seaborn keras mkl pandas pillow pydot scipy tensorflow scikit-image line_profiler memory_profiler numexpr pandas-datareader netcdf4 pivottablejs jupyterlab bqplot mpld3 ipython-sql
 
 ## # machine learning course
-## conda install -y scikit-learn seaborn keras mkl pandas pillow pydot scipy tensorflow 
+#conda install -y scikit-learn seaborn keras mkl pandas pillow pydot scipy tensorflow 
 ## 
 ## # data science handbook
-## conda install -y scikit-image line_profiler memory_profiler numexpr pandas-datareader netcdf4 
+#conda install -y scikit-image line_profiler memory_profiler numexpr pandas-datareader netcdf4 
 ## 
 ## # jupyter tips and tricks
-## conda install -y pivottablejs jupyterlab
-## conda install -y -c conda-forge bqplot mpld3 ipython-sql
+#conda install -y pivottablejs jupyterlab
+#conda install -y -c conda-forge bqplot mpld3 ipython-sql
 ## 
 ## # jupyter nglview and ssbio - pip is used - conda has some issues???
-## pip install nglview ssbio
-## jupyter-nbextension enable nglview --py --sys-prefix
+pip install nglview ssbio
+jupyter-nbextension enable nglview --py --sys-prefix
 ## 
 ## #sos polyglot notebook
-## pip install sos
-## pip install sos-notebook
+pip install sos
+pip install sos-notebook
 ## python -m sos_notebook.install
-## jupyter labextension install jupyterlab-sos
+jupyter labextension install jupyterlab-sos
 ## 
 ## # jupyter prov-o support 
-## pip install prov
+pip install prov
 ## 
 ## #link to jupyter installation
 ## ln -s $DIR/$VERSION /opt/jupyter
@@ -61,17 +62,21 @@ conda install -q -y -c ccpi -c conda-forge -c paskino jupyter pymc3 r-irkernel r
 ## 
 ## #autosklearn
 ## #swig 3 from sources
-## wget http://prdownloads.sourceforge.net/swig/swig-3.0.12.tar.gz
-## tar -xzf swig-3.0.12.tar.gz
-## cd swig-3.0.12
-## ./configure
-## make
-## make install
-## cd ..
+wget http://prdownloads.sourceforge.net/swig/swig-3.0.12.tar.gz
+tar -xzf swig-3.0.12.tar.gz
+cd swig-3.0.12
+./configure
+make
+make install
+cd ..
 ## 
 ## #auto-sklearn
-## curl https://raw.githubusercontent.com/automl/auto-sklearn/master/requirements.txt | xargs -n 1 -L 1 pip install
-## pip install auto-sklearn
+curl https://raw.githubusercontent.com/automl/auto-sklearn/master/requirements.txt | xargs -n 1 -L 1 pip install
+pip install auto-sklearn
+
+## octave
+#sudo yum install -y octave
+conda install -q -y -c conda-forge octave octave_kernel ghostscript texinfo
 
 ## set SELINUX to disabled
 sudo sed -i 's/enforcing/disabled/g' /etc/selinux/config /etc/selinux/config

@@ -2,6 +2,8 @@
 export INSTALLDIR=/opt/ccpi
 echo Bootstrapping Conda
 /vagrant/scripts/bootstrapconda.sh
+echo Bootstrapping Jupyter NB
+bash /vagrant/scripts/bootstrapjupyter.sh
 echo Bootstrapping CCPi from src
 /vagrant/scripts/bootstrapccpisrc.sh
 
