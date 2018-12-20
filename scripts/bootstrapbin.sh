@@ -10,6 +10,5 @@ bash /vagrant/scripts/bootstrapccpi.sh
 sudo chown -R vagrant:vagrant /home/vagrant/.Conda
 sudo chown -R vagrant:vagrant $INSTALLDIR
 
-yum install -y mc
 echo "CCPi installed. Connect to VM using 'vagrant ssh', use VirtualBox VM desktop. Jupyter available at http://localhost:8080/jupyter"
 
