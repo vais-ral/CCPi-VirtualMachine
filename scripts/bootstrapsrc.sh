@@ -5,10 +5,10 @@ export CIL_VERSION=18.12
 
 echo Bootstrapping Conda
 bash /vagrant/scripts/bootstrapconda.sh
-echo Bootstrapping Jupyter NB
-bash /vagrant/scripts/bootstrapjupyter.sh
 echo Bootstrapping CCPi from src
 bash /vagrant/scripts/bootstrapccpisrc.sh
+echo Bootstrapping Jupyter NB
+bash /vagrant/scripts/bootstrapjupyter.sh
 
 #give vagrant ownership to INSTALLDIR
 chown -R vagrant:vagrant $INSTALLDIR

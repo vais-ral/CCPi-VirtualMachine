@@ -1,14 +1,15 @@
+sudo yum install -y git cmake3 gcc gcc-c++ 
+sudo ln -s /usr/bin/cmake3 /usr/bin/cmake
+
+export LOCALPKGDIR=${INSTALLDIR}/envs/py3/conda-bld
+sudo mkdir -p ${SOURCEDIR}
+sudo chown -R vagrant:vagrant ${SOURCEDIR}
+
 . $INSTALLDIR/etc/profile.d/conda.sh
-
-export LOCALPKGDIR=${INSTALLDIR}/envs/py3/conda-bld/linux-64/
-mkdir -p ${SOURCEDIR}
-
 conda activate py3
 # Preprocessing prerequisites
 #yum install -y svn
-conda install -q -y -c conda-forge numpy matplotlib scipy tifffile conda-build
-sudo yum install -y git cmake3 gcc gcc-c++ 
-sudo ln -s /usr/bin/cmake3 /usr/bin/cmake
+conda install -q -y -c conda-forge numpy=1.12 matplotlib scipy tifffile conda-build
 
 # preprocesing from sources
 cd $SOURCEDIR
@@ -30,7 +31,7 @@ cd $SOURCEDIR
 git clone https://github.com/vais-ral/CCPi-Reconstruction.git
 cd CCPi-Reconstruction
 # build CIL library
-conda build recipes/library -c conda-forge -c ccpi
+conda build recipes/library -c conda-forge -c ccpi --python=3.5 --numpy=1.12
 conda install -q -y -c ${LOCALPKGDIR} cil_reconstruction=${CIL_VERSION}
 # build ccpi-reconstruction package 
 conda build Wrappers/python/conda-recipe -c conda-forge -c ccpi --python=3.5 --numpy=1.12
@@ -54,3 +55,5 @@ git clone https://github.com/vais-ral/CCPi-Astra.git
 cd CCPi-Astra
 conda build Wrappers/Python/conda-recipe -c conda-forge -c ccpi -c astra-toolbox --python=3.5 --numpy=1.12
 conda install -q -y -c ${LOCALPKGDIR} -c astra-toolbox ccpi-astra=${CIL_VERSION}
+
+sudo chown -R vagrant:vagrant ${SOURCEDIR}

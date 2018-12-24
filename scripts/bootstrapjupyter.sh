@@ -15,7 +15,8 @@ conda activate py3
 #echo installing jupyter packages
 #conda config --add channels ccpi conda-forge paskino 
 # installing all -as ccpi request some lower versions of libraries
-conda install -q -y -c conda-forge jupyter pymc3 r-irkernel r=3.3.2 tornado=4.5.3 scipy docopt numpy=1.12 h5py matplotlib libxml2 psutil tk nose ace 
+#conda install -q -y -c conda-forge jupyter pymc3 r-irkernel r=3.3.2 tornado=4.5.3 scipy docopt numpy=1.12 h5py matplotlib libxml2 psutil tk nose
+conda install -q -y -c conda-forge jupyter pymc3 r-irkernel r tornado scipy docopt numpy=1.12 h5py matplotlib libxml2 psutil tk nose
 
 ## moved to bootstrapconda - to reduce installation time
 #conda install -q -y jupyter pymc3 r-irkernel r=3.3.2 tornado=4.5.3 
@@ -67,7 +68,7 @@ tar -xzf swig-3.0.12.tar.gz
 cd swig-3.0.12
 ./configure
 make
-make install
+sudo make install
 cd ..
 ## 
 ## #auto-sklearn
