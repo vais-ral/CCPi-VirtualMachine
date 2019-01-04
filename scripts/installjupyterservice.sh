@@ -5,9 +5,10 @@ sudo setenforce 0
 # copy all system config to /
 sudo cp -R /vagrant/conf/* /
 # escape slashes in installdirectory
-export INSTALLDIRESC= $(echo $INSTALLDIR | sed 's_/_\\/_g')
+export INSTALLDIRESC=$(echo $INSTALLDIR | sed 's_/_\\/_g')
 # replace installdir variable value inside systemd service definition
-sudo sed -i -e "s/^\(INSTALLDIR\s*=\s*\).*$/\1${INSTALLDIRESC}/g" /etc/systemd/system/ccpi-jupyter.service 
+sudo sed -i -e "s/INSTALLDIR=.*$/INSTALLDIR=${INSTALLDIRESC}/g" /etc/systemd/system/ccpi-jupyter.service 
+#sudo sed -i -e "s/\(INSTALLDIR\s*=\s*\).*$/\1${INSTALLDIRESC}/g" /etc/systemd/system/ccpi-jupyter.service 
 
 sudo chown -R vagrant:vagrant /home/vagrant/.jupyter
 sudo chmod ugo-x /etc/systemd/system/ccpi-jupyter.service
