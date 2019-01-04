@@ -39,7 +39,9 @@ conda install -q -y -c ${LOCALPKGDIR} ccpi-reconstruction=${CIL_VERSION}
 
 # Build Framework, Plugins, and Astra
 cd $SOURCEDIR
-git clone https://github.com/vais-ral/CCPi-Framework.git
+git clone https://github.com/TomasKulhanek/CCPi-Framework.git
+# original doesn't accept CIL_VERSION
+#git clone https://github.com/vais-ral/CCPi-Framework.git
 cd CCPi-Framework
 conda build Wrappers/Python/conda-recipe -c conda-forge -c ccpi --python=3.5 --numpy=1.12
 conda install -q -y -c ${LOCALPKGDIR} ccpi-framework=${CIL_VERSION}

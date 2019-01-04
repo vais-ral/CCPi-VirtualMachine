@@ -3,6 +3,7 @@ Description=Jupyter notebook
 
 [Service]
 Type=oneshot
+Environment=INSTALLDIR=/opt/ccpi
 RemainAfterExit=yes
 PIDFile=/var/run/jupyter-nb.pid
 User=vagrant

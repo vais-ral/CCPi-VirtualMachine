@@ -2,7 +2,13 @@
 
 HTTPD_CONF="/etc/httpd/conf.d/jupyter.conf"
 HTTPD_SERVICE="httpd"
-INSTALLDIR=/opt/ccpi
+if [ -z "$INSTALLDIR" ]; then 
+  echo "INSTALLDIR is not set setting default"
+  INSTALLDIR=/opt/ccpi
+else
+  echo using installation at ${INSTALLDIR}  
+
+fi
 function help {
 echo Usage:
 echo startJupyter.sh add|remove [username] [port] [proxyurlpart] [logfilepath]

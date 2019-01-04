@@ -2,7 +2,6 @@ echo installing Jupyter into SL7
 ## set DIR and VERSION e.g. to point to another directory
 
 DIR=$INSTALLDIR
-VERSION=jupyter
 
 # sudo in case this script is executed after installation
 # sudo yum install -y wget bzip2
@@ -35,6 +34,7 @@ conda install -q -y -c rdkit -c conda-forge rdkit scikit-learn seaborn keras mkl
 #conda install -y -c conda-forge bqplot mpld3 ipython-sql
 ## 
 ## # jupyter nglview and ssbio - pip is used - conda has some issues???
+pip install --upgrade pip
 pip install nglview ssbio
 jupyter-nbextension enable nglview --py --sys-prefix
 ## 
@@ -79,24 +79,3 @@ pip install auto-sklearn
 #sudo yum install -y octave
 conda install -q -y -c conda-forge octave octave_kernel ghostscript texinfo
 
-## set SELINUX to disabled
-sudo sed -i 's/enforcing/disabled/g' /etc/selinux/config /etc/selinux/config
-sudo setenforce 0
-## copy jupyter conf with no passwd
-# copy all system config to /
-sudo cp -R /vagrant/conf/* / 
-sudo chown -R vagrant:vagrant /home/vagrant/.jupyter
-sudo chmod ugo-x /etc/systemd/system/ccpi-jupyter.service
-
-## install httpd and enable port 80 in firewall
-sudo yum install -y httpd firewalld
-sudo systemctl start firewalld
-sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
-sudo firewall-cmd --zone=public --add-port=22/tcp --permanent
-sudo firewall-cmd --reload 
-sudo systemctl enable httpd
-sudo systemctl start httpd
-
-## start jupyter job on port 8901 configure apache to forward to /jupyter 
-sudo systemctl enable ccpi-jupyter
-sudo systemctl start ccpi-jupyter 
