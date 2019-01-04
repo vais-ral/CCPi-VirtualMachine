@@ -1,5 +1,6 @@
 # use ccpi from cvmfs installation
 export INSTALLDIR=/cvmfs/west-life.egi.eu/software/ccpi/latest
+bash /vagrant/scripts/installcvmfswestlife.sh
 #echo Bootstrapping Conda
 #bash /vagrant/scripts/installconda.sh
 bash /vagrant/scripts/installcondasetrc.sh
