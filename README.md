@@ -24,7 +24,7 @@ vagrant up
 
 ### Installation from CVMFS
 (3mins)
-This option use minimal Scientific Linux 7 with XFCE4 GUI VM template, CCPi is preinstalled in CVMFS repository which is mounted into /cvmfs. Bootstrap is rapid (3 mins) and CCPi binaries are transparently downloaded to VM cache (cernvmfs) on demand, so first launch may take significantly longer time depending on connection speed.
+This option use minimal Scientific Linux 7 with XFCE4 GUI VM template, CCPi is preinstalled in CVMFS repository which is mounted into /cvmfs. Bootstrap is rapid (3 mins) and CCPi binaries are transparently downloaded to VM cache (cernvmfs) on demand, so first launch of ccpi libraries and tools may take significantly longer time depending on connection speed.
 
 ```bash
 git clone https://github.com/TomasKulhanek//CCPi-VirtualMachine.git
