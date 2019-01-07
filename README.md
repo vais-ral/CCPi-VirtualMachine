@@ -13,15 +13,29 @@ Then type in your command line:
 
 ```bash
 git clone https://github.com/vais-ral/CCPi-VirtualMachine.git
-cd CCPi-VirtualMachine
+cd CCPi-VirtualMachine/ccpi-vm-from-binaries
 vagrant up
 ```
 - `git clone` - clones this repository into your preferred location 
-- `cd CCPi-VirtualMachine` - changes dir to the repository directory
+- `cd CCPi-VirtualMachine/ccpi-vm-from-binaries` - changes dir to the repository directory where vagrant configuration is present
 - `vagrant up` - for the first time it downloads and boots minimal Scientific Linux 7 with GUI environment (XFCE) (600 MB) from app.vagrantup.com and installs CCPi from conda. First boot provisions the system and takes around 15 minutes (depending on connection and HW it may take longer). It configures the ssh on guest and host to accept password-less login for vagrant user. It creates default shared folder in guest VM `\vagrant` which is shared to host's `CCPI-VirtualMachine`. 
 
-## Installation from binaries
-This is same as default installation.
+## Other installation options
+
+### Installation from CVMFS
+(3mins)
+This option use minimal Scientific Linux 7 with XFCE4 GUI VM template, CCPi is preinstalled in CVMFS repository which is mounted into /cvmfs. Bootstrap is rapid (3 mins) and CCPi binaries are transparently downloaded to VM cache (cernvmfs) on demand, so first launch may take significantly longer time depending on connection speed.
+
+```bash
+git clone https://github.com/TomasKulhanek//CCPi-VirtualMachine.git
+cd CCPi-VirtualMachine
+cd ccpi-vm-from-cvmfs
+vagrant up
+```
+
+### Installation from binaries
+(15-20 mins)
+Default option, it uses minimal Scientific Linux 7 with XFCE4 GUI VM template, binaries of CCPi is installed using `conda` tool and ccpi channel.
 
 ```bash
 git clone https://github.com/TomasKulhanek//CCPi-VirtualMachine.git
@@ -30,7 +44,8 @@ cd ccpi-vm-from-binaries
 vagrant up
 ```
 
-## Installation from sources
+### Installation from sources
+(40-120 mins)
 This option will use same VM template, but installs the CCPi packages from sources. Modify the `scripts/bootstrapsrc.sh` in order to build or ommit particular packages.
 ```bash
 git clone https://github.com/TomasKulhanek//CCPi-VirtualMachine.git
