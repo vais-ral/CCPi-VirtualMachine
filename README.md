@@ -61,7 +61,7 @@ To access terminal of virtual machine, type:
 To access desktop, open VirtualBox and click the running virtual machine to show accees it's desktop.
 
 The VM contains apache web server and Jupyter notebook available at `/jupyter` context path.
-To access web UI of jupyter notebook, go http://localhost:[port]/jupyter/ (the [port] is 8080 and is forwarded to guest port 80, consult exact port in Vagrantfile). Demo notebooks are available at http://localhost:[port]/jupyter/notebooks/
+To access web UI of jupyter notebook, go http://localhost:[port]/jupyter/ (the [port] is 8080 and is forwarded to guest port 80, consult exact port in Vagrantfile). Demo notebooks are available after clicking `notebooks` folder or directly at http://localhost:[port]/jupyter/tree/notebooks/
 
 The CCPi installation of Python 3.x and all CCPi dependent modules are present at `/opt/ccpi/` directory or at `/cvmfs/west-life.egi.eu/software/ccpi/latest`. Virtual environment with Python 3 is activated by default in BASH using `conda activate`. In order to exchange files between guest and host, the `/vagrant` is mapped to guest path of the `CCPi-VirtualMachine` directory. 
 Follow https://cil.readthedocs.io and binary installation option for PATH `/opt/ccpi`.
