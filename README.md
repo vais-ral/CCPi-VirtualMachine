@@ -60,12 +60,14 @@ To access terminal of virtual machine, type:
 
 To access desktop, open VirtualBox and click the running virtual machine to show accees it's desktop.
 
-To access web UI of jupyter notebook, go http://localhost:8080 (the port 8080 is by default forwarded to guest port 80, consult exact port in Vagrantfile).
+The VM contains apache web server and Jupyter notebook available at `/jupyter` context path.
+To access web UI of jupyter notebook, go http://localhost:[port]/jupyter/ (the [port] is 8080 and is forwarded to guest port 80, consult exact port in Vagrantfile). Demo notebooks are available at http://localhost:[port]/jupyter/notebooks/
 
-The CCPi installation of Python 3.x and all CCPi dependent modules are present at `/opt/ccpi/` directory, PATH environment is set for BASH. In order to exchange files between guest and host, the `/vagrant` is mapped to guest path of the `CCPi-VirtualMachine` directory. 
+The CCPi installation of Python 3.x and all CCPi dependent modules are present at `/opt/ccpi/` directory or at `/cvmfs/west-life.egi.eu/software/ccpi/latest`. Virtual environment with Python 3 is activated by default in BASH using `conda activate`. In order to exchange files between guest and host, the `/vagrant` is mapped to guest path of the `CCPi-VirtualMachine` directory. 
 Follow https://cil.readthedocs.io and binary installation option for PATH `/opt/ccpi`.
 
 - `vagrant halt` - shutdowns the VM.
 - `vagrant up` - launched for the second and other time it will boot into existing VM in several seconds.
+- `vagrant destroy` - will destroy VM with all the content, all files saved into guest `/vagrant` folder are preserved in host's current working directory from where `vagrant` was launched.
 
 ![Vagrant up screenshot](/vagrantupscreen.gif)
