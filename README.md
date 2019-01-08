@@ -1,6 +1,10 @@
 # CCPi Virtual Machine
 This repository contains scripts to create virtual machine with installed CCPi software for tomographic imaging from scratch. VM includes virtual environment with Python 3.x and all CCPi repositories installed using `conda` tool at `/opt/ccpi` path.
 Currently preprocessing, reconstruction, quantification, segmentation and regularisation are present.
+- `/ccpi-vm-from-*` contains vagrant configuration to create VM from binaries/sources/cvmfs, see installation options
+-	`/conf` 	contains configuration is replaced in VM
+- `/notebooks` contains demo jupyter notebooks, available to view/edit after installation
+-	`/scripts` contains bootstrap and installation scripts used by vagrant to configure VM. It can be used after installation to customize VM.
 
 ## Brief installation from binaries
  
