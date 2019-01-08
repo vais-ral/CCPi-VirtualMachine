@@ -28,7 +28,7 @@ vagrant up
 
 ### Installation from CVMFS
 (3mins)
-This option use minimal Scientific Linux 7 with XFCE4 GUI VM template, CCPi is preinstalled in CVMFS repository which is mounted into /cvmfs. Bootstrap is rapid (3 mins) and CCPi binaries are transparently downloaded to VM cache (cernvmfs) on demand, so first launch of ccpi libraries and tools may take significantly longer time depending on connection speed.
+This option is for general user who wants use latest released CCPi libraries to process data. It use minimal Scientific Linux 7 with XFCE4 GUI VM template, CCPi is preinstalled in CVMFS repository which is mounted into read-only /cvmfs. Bootstrap is rapid (3 mins) and CCPi binaries are transparently downloaded to VM cache (cernvmfs) on demand, so first launch of ccpi libraries and tools may take significantly longer time depending on connection speed.
 
 ```bash
 git clone https://github.com/TomasKulhanek//CCPi-VirtualMachine.git
@@ -39,7 +39,7 @@ vagrant up
 
 ### Installation from binaries
 (15-20 mins)
-Default option, it uses minimal Scientific Linux 7 with XFCE4 GUI VM template, binaries of CCPi is installed using `conda` tool and ccpi channel.
+This option is for general user who wants use latest released CCPi libraries and want to control the virtual python environment, in order to customize it. It uses minimal Scientific Linux 7 with XFCE4 GUI VM template, binaries of CCPi is installed using `conda` tool and ccpi channel.
 
 ```bash
 git clone https://github.com/TomasKulhanek//CCPi-VirtualMachine.git
@@ -50,7 +50,7 @@ vagrant up
 
 ### Installation from sources
 (40-120 mins)
-This option will use same VM template, but installs the CCPi packages from sources. Modify the `scripts/bootstrapsrc.sh` in order to build or ommit particular packages.
+This option is for developer user who wants to first download and build CCPi libraries from sources, e.g. in order to develop or add some functionality or test. This option uses same VM template, but installs the CCPi packages from sources. Modify the `scripts/bootstrapsrc.sh` in order to build or ommit particular packages.
 ```bash
 git clone https://github.com/TomasKulhanek//CCPi-VirtualMachine.git
 cd CCPi-VirtualMachine
@@ -64,7 +64,7 @@ To access terminal of virtual machine, type:
 
 To access desktop, open VirtualBox and click the running virtual machine to show accees it's desktop.
 
-The VM contains apache web server and Jupyter notebook available at `/jupyter` context path.
+The VM contains apache web server and Python 3 virtual environment with selected Jupyter notebook available at `/jupyter` context path.
 To access web UI of jupyter notebook, go http://localhost:[port]/jupyter/ (the [port] is 8080 and is forwarded to guest port 80, consult exact port in Vagrantfile). Demo notebooks are available after clicking `notebooks` folder or directly at http://localhost:[port]/jupyter/tree/notebooks/
 
 The CCPi installation of Python 3.x and all CCPi dependent modules are present at `/opt/ccpi/` directory or at `/cvmfs/west-life.egi.eu/software/ccpi/latest`. Virtual environment with Python 3 is activated by default in BASH using `conda activate`. In order to exchange files between guest and host, the `/vagrant` is mapped to guest path of the `CCPi-VirtualMachine` directory. 
