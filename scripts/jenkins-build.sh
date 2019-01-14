@@ -41,27 +41,33 @@ export SOURCEDIR=`pwd`
 # preprocesing from sources
 cd $SOURCEDIR
 git clone https://github.com/vais-ral/CCPi-PreProcessing
-. CCPi-PreProcessing/build/jenkins-build.sh
+cd CCPi-PreProcessing
+. build/jenkins-build.sh
 
 # Regularisation
 cd $SOURCEDIR
 git clone https://github.com/vais-ral/CCPi-Regularisation-Toolkit
-. CCPi-Regularisation-Toolkit/build/jenkins-build.sh
+cd CCPi-Regularisation-Toolkit
+. build/jenkins-build.sh
 
 # Reconstruction
 cd $SOURCEDIR
 git clone https://github.com/vais-ral/CCPi-Reconstruction.git
-. CCPi-Reconstruction/build/jenkins-build.sh
+cd CCPi-Reconstruction
+. build/jenkins-build.sh
 
 # Build Framework, Plugins, and Astra
 cd $SOURCEDIR
 git clone https://github.com/TomasKulhanek/CCPi-Framework.git
-. CCPi-Framework/build/jenkins-build.sh
+cd CCPi-Framework
+. build/jenkins-build.sh
 
 cd $SOURCEDIR
 git clone https://github.com/vais-ral/CCPi-FrameworkPlugins.git
-. CCPi-FrameworkPlugins/build/jenkins-build.sh
+cd CCPi-FrameworkPlugins
+. build/jenkins-build.sh
 
 cd $SOURCEDIR
 git clone https://github.com/vais-ral/CCPi-Astra.git
-. CCPi-Astra/build/jenkins-build.sh
+cd CCPi-Astra
+. build/jenkins-build.sh
