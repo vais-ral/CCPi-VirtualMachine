@@ -1,5 +1,8 @@
 #!/bin/bash
 # CIL_VERSION is optional, CCPI_CONDA_TOKEN is mandatory
+echo CCPI_CONDA_TOKEN: ${CCPI_CONDA_TOKEN}
+echo CIL_VERSION: ${CIL_VERSION}
+
 if [[ -n ${CCPI_CONDA_TOKEN} ]]
 then
   echo Building CCPi and uploading to anaconda using CCPI_CONDA_TOKEN ${CCPI_CONDA_TOKEN} 
