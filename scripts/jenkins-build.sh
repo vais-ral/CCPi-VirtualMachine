@@ -1,3 +1,13 @@
+#!/bin/bash
+# CIL_VERSION is optional, CCPI_CONDA_TOKEN is mandatory
+if [[ -n ${CCPI_CONDA_TOKEN} ]]
+then
+  echo Building CCPi and uploading to anaconda using CCPI_CONDA_TOKEN ${CCPI_CONDA_TOKEN} 
+else
+  echo CCPI_CONDA_TOKEN not defined
+  exit 1
+fi
+
 if [[ -n ${CIL_VERSION} ]]
 then
   echo Using defined version: $CIL_VERSION
@@ -26,13 +36,6 @@ conda install -y conda-build
 
 export INSTALLDIR=`pwd`
 export SOURCEDIR=`pwd`
-if [[ -n ${CCPI_CONDA_TOKEN} ]]
-then
-  echo Building CCPi and uploading to anaconda using CCPI_CONDA_TOKEN ${CCPI_CONDA_TOKEN} 
-else
-  echo CCPI_CONDA_TOKEN not defined
-  exit 1
-fi
 # preprocesing from sources
 cd $SOURCEDIR
 git clone https://github.com/vais-ral/CCPi-PreProcessing
