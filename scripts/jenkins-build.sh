@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
-
+#
 # Copyright 2019 Tomas Kulhanek, see /LICENSE
 #
-# Universal script to build CCPi module libraries
+# Universal script to build CCPi module libraries based on conda recipe in relative path at Wrappers/Python/conda-recipe
+# multiple files can be build (combination of python version and dependent libraries). Detected by `conda build --output`, then all
+# e.g. 
+#   jenkins-build.sh -c ccpi -c conda-forge 
+# or 
+#   export CCPI_BUILD_ARGS="-c ccpi -c conda-forge"; bash jenkins-build.sh
+# is passed to subsequent conda build as following
+#   conda build Wrappers/Python/conda-recipe -c ccpi -c conda-forge
 #
-# These environment variables can be specified optionally
+# These environment variables can be specified optionally:
+# CCPI_PRE_BUILD - if defined, then conda build $PREBUILD is performed before resulted files will be uploaded to anaconda channel too
+# CCPI_BUILD_ARGS - variable or passed to conda build as `conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS"`
 # CIL_VERSION - version of this build, it will be used to label it within multiple places during build
 # CCPI_CONDA_TOKEN - token to upload binary builds to anaconda 
 # - if CIL_VERSION is not expliticly defined, then version is determined from `git describe --tags` and puts also
@@ -13,14 +22,9 @@
 # - if the version is release (no number after '_'), anaconda upload is production
 # - if the version is not release (number of commits after '_') then anaconda upload is labeled as 'dev'
 # - some commit can be explicitly tagged including '_' char and something after, then it is considered as 'dev' version
-# 
-# This script builds a CCPI module based on configuration in relative path Wrappers/Python/conda-recipe
-# multiple files can be build (combination of python version and dependent libraries). Detected by `conda build --output`, then all
-# Arguments to this script is passed to `conda build`
-# e.g. 
-#   jenkins-build.sh -c ccpi -c conda-forge 
-# is passed to subsequent conda build as following
-#   conda build Wrappers/Python/conda-recipe -c ccpi -c conda-forge
+echo CCPi build 
+echo called with arguments: $@
+echo CCPI_BUILD_ARGS: $CCPI_BUILD_ARGS
 
 if [[ -n ${CIL_VERSION} ]]
 then
@@ -63,17 +67,20 @@ cat .git/HEAD
 #git clone https://github.com/vais-ral/CCPi-Regularisation-Toolkit
 conda install -y conda-build
 #cd CCPi-Regularisation-Toolkit # already there by jenkins
+
+if [[ -n ${CCPI_PRE_BUILD} ]]; then
+  conda build "${CCPI_PRE_BUILD}"
+  export REG_FILES=`conda build "${CCPI_PRE_BUILD} --output`$'\n' 
+fi
 # need to call first build
-conda build Wrappers/Python/conda-recipe "$@"
+conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" "$@"
 # then need to call the same with --output 
 #- otherwise no build is done :-(, just fake file names are generated
-export REG_FILES=`conda build Wrappers/Python/conda-recipe --output`
+export REG_FILES=$REG_FILES`conda build Wrappers/Python/conda-recipe --output`
 # REG_FILES variable should contain output files
 echo files created: $REG_FILES
 
 # upload to anaconda only if token is defined
-# and TODO pull request not to upload
-
 if [[ -n ${CCPI_CONDA_TOKEN} ]]; then
   if [[ ${GIT_BRANCH} == "refs/heads/master" ]]; then
     conda install anaconda-client
