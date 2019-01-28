@@ -3,25 +3,27 @@
 # Copyright 2019 Tomas Kulhanek, see /LICENSE
 #
 # Universal script to build CCPi module libraries based on conda recipe in relative path at Wrappers/Python/conda-recipe
-# multiple files can be build (combination of python version and dependent libraries). Detected by `conda build --output`, then all
-# e.g. 
-#   jenkins-build.sh -c ccpi -c conda-forge 
-# or 
-#   export CCPI_BUILD_ARGS="-c ccpi -c conda-forge"; bash jenkins-build.sh
-# is passed to subsequent conda build as following
-#   conda build Wrappers/Python/conda-recipe -c ccpi -c conda-forge
+# variants are supported (combination of python version and dependent libraries).
+# Typical usage:
+#   cd CCPi-[ccpi-module]
+#   export CCPI_BUILD_ARGS=[ccpi_build_args]
+#   bash <(curl -L https://raw.githubusercontent.com/vais-ral/CCPi-VirtualMachine/master/scripts/jenkins-build.sh)
 #
-# These environment variables can be specified optionally:
-# CCPI_PRE_BUILD - if defined, then conda build $PREBUILD is performed before resulted files will be uploaded to anaconda channel too
-# CCPI_BUILD_ARGS - variable or passed to conda build as `conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS"`
+#   where [ccpi_build_args] are optional arguments passed to conda build e.g.: "-c ccpi -c conda-forge"
+# These environment variables can be specified:
+# CCPI_PRE_BUILD - if defined, then "conda build $PREBUILD" is performed before conda build, 
+#                  binaries will be uploaded to anaconda channel together with main build
+# CCPI_BUILD_ARGS - passed to conda build as `conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS"`
+#   e.g. CCPI_BUILD_ARGS="-c ccpi -c conda-forge";
 # CIL_VERSION - version of this build, it will be used to label it within multiple places during build
-# CCPI_CONDA_TOKEN - token to upload binary builds to anaconda 
-# - if CIL_VERSION is not expliticly defined, then version is determined from `git describe --tags` and puts also
-#   the number of commits after this tag, e.g. tag is `0.10.4` and current commit is 3 after this tag then version is `0.10.4_3`
-# - it detects the branch under which the CCPi is build, master is uploaded to anaconda channel, non-master branch isn't
+# - if CIL_VERSION is not expliticly defined, then version is determined from `git describe --tags`
+#   note that it contains information about last tag and number of commits after it.
+#   thus e.g. last tag is `0.10.4` and current commit is 3 after this tag, then version is `0.10.4_3`
 # - if the version is release (no number after '_'), anaconda upload is production
 # - if the version is not release (number of commits after '_') then anaconda upload is labeled as 'dev'
 # - some commit can be explicitly tagged including '_' char and something after, then it is considered as 'dev' version
+# CCPI_CONDA_TOKEN - token to upload binary builds to anaconda 
+# - it detects the branch under which the CCPi is build, master is uploaded to anaconda channel, non-master branch isn't
 echo CCPi build 
 echo called with arguments: $@
 echo CCPI_BUILD_ARGS: $CCPI_BUILD_ARGS
