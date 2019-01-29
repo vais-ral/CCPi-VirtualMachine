@@ -13,6 +13,8 @@
 # These environment variables can be specified:
 # CCPI_PRE_BUILD - if defined, then "conda build $PREBUILD" is performed before conda build, 
 #                  binaries will be uploaded to anaconda channel together with main build
+# CCPI_POST_BUILD - if defined, then "conda build $CCPI_POST_BUILD" is performed after conda build, 
+#                  binaries will be uploaded to anaconda channel together with main build
 # CCPI_BUILD_ARGS - passed to conda build as `conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS"`
 #   e.g. CCPI_BUILD_ARGS="-c ccpi -c conda-forge";
 # CIL_VERSION - version of this build, it will be used to label it within multiple places during build
@@ -78,9 +80,14 @@ fi
 conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" "$@"
 # then need to call the same with --output 
 #- otherwise no build is done :-(, just fake file names are generated
-export REG_FILES=$REG_FILES`conda build Wrappers/Python/conda-recipe --output`
+export REG_FILES=$REG_FILES`conda build Wrappers/Python/conda-recipe --output`$'\n'
 # REG_FILES variable should contain output files
 echo files created: $REG_FILES
+
+if [[ -n ${CCPI_POST_BUILD} ]]; then
+  conda build "${CCPI_POST_BUILD}"
+  export REG_FILES=$REG_FILES`conda build "${CCPI_POST_BUILD} --output`
+fi
 
 # upload to anaconda only if token is defined
 if [[ -n ${CCPI_CONDA_TOKEN} ]]; then
