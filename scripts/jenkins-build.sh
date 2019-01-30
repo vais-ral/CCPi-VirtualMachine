@@ -73,11 +73,11 @@ conda install -y conda-build
 #cd CCPi-Regularisation-Toolkit # already there by jenkins
 
 if [[ -n ${CCPI_PRE_BUILD} ]]; then
-  conda build "${CCPI_PRE_BUILD}"
+  eval conda build "${CCPI_PRE_BUILD}"
   export REG_FILES=`conda build "${CCPI_PRE_BUILD} --output`$'\n' 
 fi
 # need to call first build
-conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" "$@"
+eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" "$@"
 # then need to call the same with --output 
 #- otherwise no build is done :-(, just fake file names are generated
 export REG_FILES=$REG_FILES`conda build Wrappers/Python/conda-recipe --output`$'\n'
@@ -85,7 +85,7 @@ export REG_FILES=$REG_FILES`conda build Wrappers/Python/conda-recipe --output`$'
 echo files created: $REG_FILES
 
 if [[ -n ${CCPI_POST_BUILD} ]]; then
-  conda build "${CCPI_POST_BUILD}"
+  eval conda build "${CCPI_POST_BUILD}"
   export REG_FILES=$REG_FILES`conda build "${CCPI_POST_BUILD} --output`
 fi
 
