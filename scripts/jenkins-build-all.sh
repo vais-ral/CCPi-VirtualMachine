@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# script to build all CCPi modules at once and upload optionally the build to anaconda channel
 # CIL_VERSION is optional, CCPI_CONDA_TOKEN is mandatory
 echo CCPI_CONDA_TOKEN: ${CCPI_CONDA_TOKEN}
 echo CIL_VERSION: ${CIL_VERSION}
