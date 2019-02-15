@@ -12,7 +12,7 @@ cd $DIR
 conda activate py3
 
 #echo installing jupyter, octave, r notebook packages
-conda update -y -n root conda
+
 conda install -q -y -c conda-forge jupyter octave octave_kernel scipy h5py matplotlib rdkit scikit-learn seaborn keras mkl pandas pillow pydot scipy tensorflow pandas-datareader jupyterlab bqplot mpld3 ipython-sql texinfo numpy=1.12 python=3.6
 #r r-irkernel
 #octave=4.2.1=blas_openblash5b47107_8 octave_kernel graphicsmagick

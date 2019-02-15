@@ -8,6 +8,7 @@ mkdir -p $INSTALLDIR
 ./Miniconda3-latest-Linux-x86_64.sh -u -b -p $INSTALLDIR
 PATH=$PATH:$INSTALLDIR/bin
 conda create -q -y --name py3 python=3.5
+conda update -y -n root conda
 #chown -R vagrant:vagrant $INSTALLDIR
 #conda activate py3
 # rest file moved to bootstrapcondasetrc.sh
