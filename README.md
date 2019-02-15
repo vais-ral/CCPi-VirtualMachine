@@ -5,15 +5,15 @@ Currently preprocessing, reconstruction, quantification, segmentation and regula
 -	`/conf` 	contains configuration is replaced in VM
 - `/notebooks` contains demo jupyter notebooks, available to view/edit after installation
 -	`/scripts` contains bootstrap and installation scripts used by vagrant to configure VM. It can be used after installation to customize VM.
-
-## Brief installation from binaries
  
 Requirement: 
 - HW: 1 CPU, 2 GB RAM, 5-50GB disk space.
 - OS: Any OS supported by VirtualBox and Vagrant tool (tested on Windows 7,Windows 10, Ubuntu 16.04)
 - SW: Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](https://www.vagrantup.com/downloads.html) tested version 2.1.1. Some OS has their own distribution of vagrant and virtualbox: `yum install vagrant virtualbox` OR `apt install vagrant virtualbox`.
 
-Then type in your command line:
+## Brief installation from binaries
+
+Type in your command line:
 
 ```bash
 git clone https://github.com/vais-ral/CCPi-VirtualMachine.git
@@ -51,6 +51,17 @@ vagrant up
 ### Installation from sources
 (40-120 mins)
 This option is for developer user who wants to first download and build CCPi libraries from sources, e.g. in order to develop or add some functionality or test. This option uses same VM template, but installs the CCPi packages from sources. Modify the `scripts/bootstrapsrc.sh` in order to build or ommit particular packages.
+```bash
+git clone https://github.com/TomasKulhanek//CCPi-VirtualMachine.git
+cd CCPi-VirtualMachine
+cd ccpi-vm-from-sources
+vagrant up
+```
+
+
+### Installation with empty environment
+(5-10 mins)
+This option is for developer user who wants just prepare initial environment,e.g. to develop and  build custom CCPi libraries from sources. This option uses same VM template, but does not install any CCPi packages. Modify the `scripts/bootstrapempty.sh` in order to build or ommit particular packages.
 ```bash
 git clone https://github.com/TomasKulhanek//CCPi-VirtualMachine.git
 cd CCPi-VirtualMachine
