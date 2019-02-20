@@ -77,11 +77,19 @@ if [[ -n ${CCPI_PRE_BUILD} ]]; then
   export REG_FILES=`conda build "${CCPI_PRE_BUILD} --output`$'\n' 
 fi
 # need to call first build
-eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" "$@"
-# then need to call the same with --output 
-#- otherwise no build is done :-(, just fake file names are generated
-export REG_FILES=$REG_FILES`conda build Wrappers/Python/conda-recipe --output`$'\n'
-# REG_FILES variable should contain output files
+
+if [[ -d Wrappers/Python/conda-recipe ]]; then
+  eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" "$@"
+  # call with --output generates the files being created
+  export REG_FILES=$REG_FILES`conda build Wrappers/Python/conda-recipe --output`$'\n'
+fi
+
+if [[ -d recipe ]]; then
+  eval conda build recipe "$CCPI_BUILD_ARGS" "$@"
+  # call with --output generates the files being created
+  export REG_FILES=$REG_FILES`conda build Wrappers/Python/conda-recipe --output`$'\n'
+fi
+
 echo files created: $REG_FILES
 
 if [[ -n ${CCPI_POST_BUILD} ]]; then

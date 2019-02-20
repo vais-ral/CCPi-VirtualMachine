@@ -7,6 +7,7 @@ sudo chown -R vagrant:vagrant ${SOURCEDIR}
 
 . $INSTALLDIR/etc/profile.d/conda.sh
 conda activate py3
+conda update -n base -c defaults conda
 # Preprocessing prerequisites
 #yum install -y svn
 conda install -q -y -c conda-forge numpy=1.15 matplotlib scipy tifffile conda-build
