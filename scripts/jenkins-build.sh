@@ -74,27 +74,29 @@ conda install -y conda-build
 
 if [[ -n ${CCPI_PRE_BUILD} ]]; then
   eval conda build "${CCPI_PRE_BUILD}"
-  export REG_FILES=`conda build "${CCPI_PRE_BUILD} --output`$'\n' 
+  export REG_FILES=`eval conda build "${CCPI_PRE_BUILD} --output`$'\n' 
+else
+  export REG_FILES=""
 fi
 # need to call first build
 
 if [[ -d Wrappers/Python/conda-recipe ]]; then
   eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" "$@"
   # call with --output generates the files being created
-  export REG_FILES=$REG_FILES`conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" --output`$'\n'
+  export REG_FILES=$REG_FILES`eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" --output`$'\n'
 fi
 
 if [[ -d recipe ]]; then
   eval conda build recipe "$CCPI_BUILD_ARGS" "$@"
   # call with --output generates the files being created
-  export REG_FILES=$REG_FILES`conda build recipe "$CCPI_BUILD_ARGS" --output`$'\n'
+  export REG_FILES=$REG_FILES`eval conda build recipe "$CCPI_BUILD_ARGS" --output`$'\n'
 fi
 
 echo files created: $REG_FILES
 
 if [[ -n ${CCPI_POST_BUILD} ]]; then
   eval conda build "${CCPI_POST_BUILD}"
-  export REG_FILES=$REG_FILES`conda build "${CCPI_POST_BUILD} --output`
+  export REG_FILES=$REG_FILES`eval conda build "${CCPI_POST_BUILD}" --output`
 fi
 
 # upload to anaconda only if token is defined
