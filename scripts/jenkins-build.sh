@@ -87,7 +87,7 @@ fi
 if [[ -d recipe ]]; then
   eval conda build recipe "$CCPI_BUILD_ARGS" "$@"
   # call with --output generates the files being created
-  export REG_FILES=$REG_FILES`conda build Wrappers/Python/conda-recipe --output`$'\n'
+  export REG_FILES=$REG_FILES`conda build recipe --output`$'\n'
 fi
 
 echo files created: $REG_FILES
