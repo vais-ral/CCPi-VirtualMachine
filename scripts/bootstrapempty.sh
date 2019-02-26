@@ -4,8 +4,8 @@ echo Bootstrapping Conda
 bash /vagrant/scripts/installconda.sh
 bash /vagrant/scripts/installcondasetrc.sh
 
-echo Boostrapping CCPI
-bash /vagrant/scripts/installccpi.sh
+#echo Boostrapping CCPI
+#bash /vagrant/scripts/installccpi.sh
 
 #echo Bootstrapping Jupyter NB
 #bash /vagrant/scripts/installjupyter.sh
@@ -16,4 +16,4 @@ bash /vagrant/scripts/installccpi.sh
 sudo chown -R vagrant:vagrant /home/vagrant/.Conda
 sudo chown -R vagrant:vagrant $INSTALLDIR
 
-echo "CCPi installed. Connect to VM using 'vagrant ssh', use VirtualBox VM desktop. 
+echo "CCPi VM installed. Connect to VM using 'vagrant ssh' or use VirtualBox VM desktop. 

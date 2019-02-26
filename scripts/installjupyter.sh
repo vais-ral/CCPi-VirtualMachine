@@ -11,17 +11,28 @@ cd $DIR
 . $INSTALLDIR/etc/profile.d/conda.sh
 conda activate py3
 
-#echo installing jupyter packages
+#echo installing jupyter, octave, r notebook packages
+
+conda install -q -y -c conda-forge jupyter octave octave_kernel scipy matplotlib pandas jupyterlab numpy=1.12 python=3.6
+#h5py rdkit scikit-learn seaborn keras mkl pillow pydot tensorflow pandas-datareader bqplot mpld3 ipython-sql texinfo numpy=1.12 python=3.6
+#r r-irkernel
+#octave=4.2.1=blas_openblash5b47107_8 octave_kernel graphicsmagick
+#scipy h5py matplotlib rdkit scikit-learn seaborn keras mkl pandas pillow pydot scipy tensorflow scikit-image pandas-datareader jupyterlab bqplot mpld3 ipython-sql octave=4.2.1=blas_openblash5b47107_8 octave_kernel texinfo 
+# r r-irkernel
+#conda install -q -y -c bioconda graphicsmagick
+#conda install -q -y -c r r r-irkernel
+
 #conda config --add channels ccpi conda-forge paskino 
 # installing all -as ccpi request some lower versions of libraries
 #conda install -q -y -c conda-forge jupyter pymc3 r-irkernel r=3.3.2 tornado=4.5.3 scipy docopt numpy=1.12 h5py matplotlib libxml2 psutil tk nose
-conda install -q -y -c conda-forge jupyter pymc3 r-irkernel r tornado scipy docopt numpy=1.12 h5py matplotlib libxml2 psutil tk nose
+#conda install -q -y -c conda-forge jupyter pymc3 r-irkernel r tornado scipy docopt numpy h5py matplotlib libxml2 psutil tk nose rdkit scikit-learn seaborn keras mkl pandas pillow pydot scipy tensorflow scikit-image line_profiler memory_profiler numexpr pandas-datareader netcdf4 pivottablejs jupyterlab bqplot mpld3 ipython-sql octave octave_kernel ghostscript texinfo graphicsmagick
+#conda install -q -y -c conda-forge octave octave_kernel ghostscript texinfo graphicsmagick
 
 ## moved to bootstrapconda - to reduce installation time
 #conda install -q -y jupyter pymc3 r-irkernel r=3.3.2 tornado=4.5.3 
 #echo installing rdkit
 # installing all
-conda install -q -y -c rdkit -c conda-forge rdkit scikit-learn seaborn keras mkl pandas pillow pydot scipy tensorflow scikit-image line_profiler memory_profiler numexpr pandas-datareader netcdf4 pivottablejs jupyterlab bqplot mpld3 ipython-sql
+# conda install -q -y -c rdkit -c conda-forge rdkit scikit-learn seaborn keras mkl pandas pillow pydot scipy tensorflow scikit-image line_profiler memory_profiler numexpr pandas-datareader netcdf4 pivottablejs jupyterlab bqplot mpld3 ipython-sql
 
 ## # machine learning course
 #conda install -y scikit-learn seaborn keras mkl pandas pillow pydot scipy tensorflow 
@@ -34,48 +45,23 @@ conda install -q -y -c rdkit -c conda-forge rdkit scikit-learn seaborn keras mkl
 #conda install -y -c conda-forge bqplot mpld3 ipython-sql
 ## 
 ## # jupyter nglview and ssbio - pip is used - conda has some issues???
-pip install --upgrade pip
-pip install nglview ssbio
-jupyter-nbextension enable nglview --py --sys-prefix
+#pip install --upgrade pip
+#pip install nglview ssbio
+#conda install -q -y nodejs
+#jupyter-nbextension enable nglview --py --sys-prefix
 ## 
-## #sos polyglot notebook
+## #sos polyglot notebook, to support multiple engines (Python+Octave) in single notebook
+yum -y install gcc gcc-c++
 pip install sos
 pip install sos-notebook
 ## python -m sos_notebook.install
 jupyter labextension install jupyterlab-sos
 ## 
 ## # jupyter prov-o support 
-pip install prov
+#pip install prov
 ## 
-## #link to jupyter installation
-## ln -s $DIR/$VERSION /opt/jupyter
-## #install dependencies of ssbio
-## #dssp
-## yum install -y dssp
-## ln -s /usr/bin/mkdssp /usr/bin/dssp
-## #yum install msms
-## #ln -s /usr/local/lib/msms/msms.x86_64Linux2.2.6.1 /usr/local/bin/msms
-## #ln -s /usr/local/lib/msms/pdb_to_xyzr* /usr/local/bin/
-## #stride
-## #mkdir -p /usr/local/lib/stride
-## #freesasa
-## #
-## 
-## #autosklearn
-## #swig 3 from sources
-wget http://prdownloads.sourceforge.net/swig/swig-3.0.12.tar.gz
-tar -xzf swig-3.0.12.tar.gz
-cd swig-3.0.12
-./configure
-make
-sudo make install
-cd ..
-## 
-## #auto-sklearn
-curl https://raw.githubusercontent.com/automl/auto-sklearn/master/requirements.txt | xargs -n 1 -L 1 pip install
-pip install auto-sklearn
+
 
 ## octave
 #sudo yum install -y octave
-conda install -q -y -c conda-forge octave octave_kernel ghostscript texinfo
 

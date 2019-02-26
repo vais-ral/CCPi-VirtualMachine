@@ -10,9 +10,9 @@ bash /vagrant/scripts/installconda.sh
 bash /vagrant/scripts/installcondasetrc.sh
 echo Bootstrapping CCPi from src
 bash /vagrant/scripts/installccpisrc.sh
-echo Bootstrapping Jupyter NB
-bash /vagrant/scripts/installjupyter.sh
-bash /vagrant/scripts/installjupyterservice.sh
+#echo Bootstrapping Jupyter NB
+#bash /vagrant/scripts/installjupyter.sh
+#bash /vagrant/scripts/installjupyterservice.sh
 
 #give vagrant ownership to INSTALLDIR
 chown -R vagrant:vagrant $INSTALLDIR
@@ -25,4 +25,6 @@ find ./ -type f -exec chmod go+r {} \;
 # tar -czf /vagrant/ccpi.tar.gz $CIL_VERSION
 # ccpi.tar.gz should be transferred and untared into cvmfs repository.
 # first installgsi.sh and then gsiscp 
-echo "CCPi installed. Connect to VM using 'vagrant ssh' or use VirtualBox to see the VM desktop. Access Jupyter environment at http://localhost:8080/jupyter (replace default 8080 by the correct port forwarding, consult vagrant log for details)."
+#TODO fix jupyter env. Access Jupyter environment at http://localhost:8080/jupyter (replace default 8080 by the correct port forwarding, consult vagrant log for details)."
+
+echo "CCPi installed. Connect to VM using 'vagrant ssh' or use VirtualBox to see the VM desktop. 
