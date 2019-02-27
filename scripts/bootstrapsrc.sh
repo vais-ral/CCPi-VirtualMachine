@@ -27,4 +27,5 @@ find ./ -type f -exec chmod go+r {} \;
 # first installgsi.sh and then gsiscp 
 #TODO fix jupyter env. Access Jupyter environment at http://localhost:8080/jupyter (replace default 8080 by the correct port forwarding, consult vagrant log for details)."
 
-echo "CCPi installed. Connect to VM using 'vagrant ssh' or use VirtualBox to see the VM desktop. 
+echo "CCPi installed. Connect to VM using 'vagrant ssh' or use VirtualBox to see the VM desktop."
+
