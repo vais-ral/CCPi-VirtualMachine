@@ -34,6 +34,7 @@ cd CCPi-Reconstruction
 # build CIL library
 conda build recipes/library -c conda-forge -c ccpi --python=3.6 --numpy=1.15
 conda install -q -y -c ${LOCALPKGDIR} cil_reconstruction=${CIL_VERSION}
+
 # build ccpi-reconstruction package 
 conda build Wrappers/Python/conda-recipe -c conda-forge -c ccpi --python=3.6 --numpy=1.15
 conda install -q -y -c ${LOCALPKGDIR} ccpi-reconstruction=${CIL_VERSION}
