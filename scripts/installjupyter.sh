@@ -13,7 +13,7 @@ conda activate py3
 
 #echo installing jupyter, octave, r notebook packages
 
-conda install -q -y -c conda-forge jupyter octave octave_kernel scipy matplotlib pandas jupyterlab numpy=1.12 python=3.6
+conda install -q -y -c conda-forge jupyter octave octave_kernel scipy matplotlib pandas jupyterlab numpy=1.15 python=3.6
 #h5py rdkit scikit-learn seaborn keras mkl pillow pydot tensorflow pandas-datareader bqplot mpld3 ipython-sql texinfo numpy=1.12 python=3.6
 #r r-irkernel
 #octave=4.2.1=blas_openblash5b47107_8 octave_kernel graphicsmagick
@@ -51,7 +51,12 @@ conda install -q -y -c conda-forge jupyter octave octave_kernel scipy matplotlib
 #jupyter-nbextension enable nglview --py --sys-prefix
 ## 
 ## #sos polyglot notebook, to support multiple engines (Python+Octave) in single notebook
-yum -y install gcc gcc-c++
+if hash gcc 2>/dev/null; then
+  echo using installed gcc
+else
+  echo installing gcc
+  yum -y install gcc gcc-c++
+fi
 pip install sos
 pip install sos-notebook
 ## python -m sos_notebook.install
