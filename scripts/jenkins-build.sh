@@ -36,7 +36,7 @@ then
 else
   # define CIL_VERSION from last git tag, remove first char ('v') and leave rest
   export CIL_VERSION=`git describe --tags | tail -c +2`
-  if [[ -n ${CIL_VERSION} ]]
+  if [[ -z "${CIL_VERSION}" ]]
   then
     echo "Found this CIL_VERSION ${CIL_VERSION} <<"
     git describe --tags
