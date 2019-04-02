@@ -38,10 +38,12 @@ else
   export CIL_VERSION=`git describe --tags | tail -c +2`
   if [[ -n ${CIL_VERSION} ]]
   then
+    echo "Found this CIL_VERSION ${CIL_VERSION} <<"
     git describe --tags
     echo CIL_VERSION not found: exiting
     exit 1
   else
+    echo "Found this CIL_VERSION ${CIL_VERSION} <<"
     # dash means that it's some commit after tag release -thus will be treated as dev
     if [[ ${CIL_VERSION} == *"-"* ]]; then
       # detected dash means that it is dev version, 
