@@ -35,7 +35,13 @@ then
   echo Using defined version: $CIL_VERSION
 else
   # define CIL_VERSION from last git tag, remove first char ('v') and leave rest
-  export CIL_VERSION=`git describe --tags | tail -c +2`  
+  export CIL_VERSION=`git describe --tags | tail -c +2`
+  if [[ -n ${CIL_VERSION} ]]
+  then
+    git describe --tags
+    echo CIL_VERSION not found: exiting
+    exit 1
+  else
   # dash means that it's some commit after tag release -thus will be treated as dev
   if [[ ${CIL_VERSION} == *"-"* ]]; then
     # detected dash means that it is dev version, 
