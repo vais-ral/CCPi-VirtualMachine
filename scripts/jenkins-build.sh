@@ -46,11 +46,14 @@ else
   else
     echo "Found this CIL_VERSION ${CIL_VERSION} <<"
     # dash means that it's some commit after tag release -thus will be treated as dev
-    if [[ ${CIL_VERSION} == *"-"* ]]; then
+    ncommits=`git rev-list  \`git rev-list --tags --no-walk --max-count=1\`..HEAD --count`
+    if [ $ncommits -gt '0' ] ; then
+    # if [[ ${CIL_VERSION} == *"-"* ]]; then
       # detected dash means that it is dev version, 
       # get first and second part between first dash and ignore all after other dash (usually sha)
       # and as dash is prohibited for conda build, replace with underscore
-      export CIL_VERSION=`echo ${CIL_VERSION} | cut -d "-" -f -2 | tr - _`    
+      # export CIL_VERSION=`echo ${CIL_VERSION} | cut -d "-" -f -2 | tr - _`    
+      export CIL_VERSION=${CIL_VERSION}_${ncommits}
       echo Building dev version: ${CIL_VERSION}
     else
       echo Building release version: $CIL_VERSION
