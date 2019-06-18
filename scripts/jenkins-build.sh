@@ -40,7 +40,7 @@ else
   then
     echo "Found this CIL_VERSION ${CIL_VERSION} <<"
     #git describe --tags
-    git tag | xargs -I@ git log --format=format:"%at @%n" -1 @ | sort | awk '{print $2}' | tail -n 1 | tr -d '/s/v//g'
+    git tag | xargs -I@ git log --format=format:"%at @%n" -1 @ | sort -V | awk '{print $2}' | tail -n 1 | tr -d '/s/v//g'
     echo CIL_VERSION not found: exiting
     exit 1
   else
