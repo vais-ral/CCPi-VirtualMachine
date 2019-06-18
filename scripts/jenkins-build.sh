@@ -35,7 +35,7 @@ then
   echo Using defined version: $CIL_VERSION
 else
   # define CIL_VERSION from last git tag, remove first char ('v') and leave rest
-  export CIL_VERSION=`git tag | xargs -I@ git log --format=format:"%at @%n" -1 @ | sort | awk '{print $2}' | tail -n 1 | tr -d '/s/v//g'`
+  export CIL_VERSION=`git tag | xargs -I@ git log --format=format:"%at @%n" -1 @ | sort -V | awk '{print $2}' | tail -n 1 | tr -d '/s/v//g'`
   if [[ -z "${CIL_VERSION}" ]]
   then
     echo "Found this CIL_VERSION ${CIL_VERSION} <<"
