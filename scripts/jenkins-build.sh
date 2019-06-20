@@ -87,7 +87,7 @@ conda install -y conda-build
 
 if [[ -n ${CCPI_PRE_BUILD} ]]; then
   eval conda build "${CCPI_PRE_BUILD}"
-  export REG_FILES=`eval conda build "${CCPI_PRE_BUILD} --output`$'\n' 
+  export REG_FILES=`eval conda build ${CCPI_PRE_BUILD} --output`$'\n' 
 else
   export REG_FILES=""
 fi
