@@ -128,18 +128,18 @@ if [[ -n ${CCPI_CONDA_TOKEN} ]]; then
   if [[ ${GIT_BRANCH} == "refs/heads/master" ]] | [ ${RELEASE} -eq '1' ] ; then
     conda install anaconda-client
     while read -r outfile; do
-      # fix #22 anaconda error empty filename
-      export total_uploads="${outfile} ${REG_FILES}"
-      echo uploading file ${total_uploads}
-      if [[ ! -z "${total_uploads}" ]]; then
-      #if >0 commit (some _ in version) then marking as dev build
+      ## fix #22 anaconda error empty filename
+      #export total_uploads="${outfile} ${REG_FILES}"
+      #echo uploading file ${total_uploads}
+      #if [[ ! -z "${total_uploads}" ]]; then
+      ##if >0 commit (some _ in version) then marking as dev build
         if [[ $CIL_VERSION == *"_"* ]]; then
           # upload with dev label
           anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${total_uploads} --force --label dev
         else
           anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${total_uploads} --force
         fi
-      fi  
+      #fi  
     done <<< "$REG_FILES"
   else
     echo git branch is not master, will not upload to anaconda.
