@@ -29,6 +29,9 @@
 echo CCPi build 
 echo called with arguments: $@
 echo CCPI_BUILD_ARGS: $CCPI_BUILD_ARGS
+if [[ -n ${RELEASE} ]] ; then
+  export RELEASE='0'
+fi
 
 if [[ -n ${CIL_VERSION} ]]
 then
@@ -119,7 +122,7 @@ fi
 
 # upload to anaconda only if token is defined
 if [[ -n ${CCPI_CONDA_TOKEN} ]]; then
-  if [[ ${GIT_BRANCH} == "refs/heads/master" ]]; then
+  if [[ ${GIT_BRANCH} == "refs/heads/master" ]] | [ ${RELEASE} -eq '1' ] ; then
     conda install anaconda-client
     while read -r outfile; do
       # fix #22 anaconda error empty filename
