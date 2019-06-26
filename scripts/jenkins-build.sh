@@ -130,7 +130,7 @@ if [[ -n ${CCPI_CONDA_TOKEN} ]]; then
     while read -r outfile; do
       ## fix #22 anaconda error empty filename
       #export total_uploads="${outfile} ${REG_FILES}"
-      #echo uploading file ${total_uploads}
+      echo uploading file ${outfile}
       #if [[ ! -z "${total_uploads}" ]]; then
       ##if >0 commit (some _ in version) then marking as dev build
         if [[ $CIL_VERSION == *"_"* ]]; then
