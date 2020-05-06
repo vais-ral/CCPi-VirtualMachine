@@ -89,7 +89,7 @@ fi
 
 if [[ -n ${CCPI_CONDA_TOKEN} ]]; then
   if [[ ${GIT_BRANCH} == "refs/heads/master" ]] || [ ${RELEASE} -eq '1' ] ; then
-    conda install anaconda-client
+    conda install anaconda-client python=3.7
     conda config --set anaconda_upload yes
   else
     echo git branch is not master, will not upload to anaconda.
