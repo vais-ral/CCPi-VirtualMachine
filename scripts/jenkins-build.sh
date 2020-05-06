@@ -87,6 +87,18 @@ else
   PATH=$PATH:./bin
 fi
 
+if [[ -n ${CCPI_CONDA_TOKEN} ]]; then
+  if [[ ${GIT_BRANCH} == "refs/heads/master" ]] || [ ${RELEASE} -eq '1' ] ; then
+    conda install anaconda-client
+    conda config --set anaconda_upload yes
+  else
+    echo git branch is not master, will not upload to anaconda.
+  fi
+else
+  echo CCPI_CONDA_TOKEN not defined, will not upload to anaconda.
+fi 
+
+
 GIT_BRANCH=`git rev-parse --symbolic-full-name HEAD`
 echo on branch ${GIT_BRANCH}
 cat .git/HEAD
@@ -124,26 +136,26 @@ if [[ -n ${CCPI_POST_BUILD} ]]; then
 fi
 
 # upload to anaconda only if token is defined
-if [[ -n ${CCPI_CONDA_TOKEN} ]]; then
-  if [[ ${GIT_BRANCH} == "refs/heads/master" ]] || [ ${RELEASE} -eq '1' ] ; then
-    conda install anaconda-client
-    while read -r outfile; do
-      ## fix #22 anaconda error empty filename
-      #export total_uploads="${outfile} ${REG_FILES}"
-      echo uploading file ${outfile}
-      if [[ ! -z "${outfile}" ]]; then
-      ##if >0 commit (some _ in version) then marking as dev build
-        if [[ $CIL_VERSION == *"_"* ]]; then
-          # upload with dev label
-          anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --force --label dev
-        else
-          anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --force
-        fi
-      fi  
-    done <<< "$REG_FILES"
-  else
-    echo git branch is not master, will not upload to anaconda.
-  fi
-else
-  echo CCPI_CONDA_TOKEN not defined, will not upload to anaconda.
-fi 
+# if [[ -n ${CCPI_CONDA_TOKEN} ]]; then
+#   if [[ ${GIT_BRANCH} == "refs/heads/master" ]] || [ ${RELEASE} -eq '1' ] ; then
+#     conda install anaconda-client
+#     while read -r outfile; do
+#       ## fix #22 anaconda error empty filename
+#       #export total_uploads="${outfile} ${REG_FILES}"
+#       echo uploading file ${outfile}
+#       if [[ ! -z "${outfile}" ]]; then
+#       ##if >0 commit (some _ in version) then marking as dev build
+#         if [[ $CIL_VERSION == *"_"* ]]; then
+#           # upload with dev label
+#           anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --force --label dev
+#         else
+#           anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --force
+#         fi
+#       fi  
+#     done <<< "$REG_FILES"
+#   else
+#     echo git branch is not master, will not upload to anaconda.
+#   fi
+# else
+#   echo CCPI_CONDA_TOKEN not defined, will not upload to anaconda.
+# fi 
