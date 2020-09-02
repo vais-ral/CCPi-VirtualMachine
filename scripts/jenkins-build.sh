@@ -117,6 +117,8 @@ if [[ -d recipe ]]; then
 fi
 
 echo files created: $REG_FILES
+echo "Check if that is true"
+ls -lh /home/jenkins/conda-bld/linux-64/
 
 if [[ -n ${CCPI_POST_BUILD} ]]; then
   eval conda build "${CCPI_POST_BUILD}"
