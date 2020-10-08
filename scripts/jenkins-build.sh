@@ -111,14 +111,14 @@ if [[ -d Wrappers/Python/conda-recipe ]]; then
 fi
 
 if [[ -d recipe ]]; then
-  eval conda build recipe "$CCPI_BUILD_ARGS" "$@"
+  eval conda build recipe "$CCPI_BUILD_ARGS" "$@" --no-test
   # call with --output generates the files being created
-  export REG_FILES=$REG_FILES`eval conda build recipe "$CCPI_BUILD_ARGS" --output`$'\n'
+  #--output bug work around
+  #export REG_FILES=$REG_FILES`eval conda build recipe "$CCPI_BUILD_ARGS" --output`$'\n'
+  export REG_FILES=`ls /home/jenkins/conda-bld/${ARCH}/*${CIL_VERSION}-*.tar.bz2`
 fi
 
 echo files created: $REG_FILES
-echo "Check if that is true"
-ls -lh /home/jenkins/conda-bld/linux-64/
 
 if [[ -n ${CCPI_POST_BUILD} ]]; then
   eval conda build "${CCPI_POST_BUILD}"
