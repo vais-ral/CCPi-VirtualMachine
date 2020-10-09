@@ -113,7 +113,7 @@ if [[ -d Wrappers/Python/conda-recipe ]]; then
 fi
 
 if [[ -d recipe ]]; then
-  eval conda build recipe "$CCPI_BUILD_ARGS" "$@" --no-test
+  eval conda build recipe "$CCPI_BUILD_ARGS" "$@"
   # call with --output generates the files being created
   #--output bug work around
   #export REG_FILES=$REG_FILES`eval conda build recipe "$CCPI_BUILD_ARGS" --output`$'\n'
