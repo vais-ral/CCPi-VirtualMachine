@@ -90,8 +90,6 @@ fi
 GIT_BRANCH=`git rev-parse --symbolic-full-name HEAD`
 echo on branch ${GIT_BRANCH}
 cat .git/HEAD
-# print the last log message
-git log -n 1
 
 # presume that git clone is done before this script is launched, if not, uncomment
 #git clone https://github.com/vais-ral/CCPi-Regularisation-Toolkit
@@ -111,7 +109,7 @@ if [[ -d Wrappers/Python/conda-recipe ]]; then
   # call with --output generates the files being created
   #export REG_FILES=$REG_FILES`eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" --output`$'\n'
   #--output bug work around
-  export REG_FILES=`ls ${CONDA_PREFIX}/conda-bld/linux-64/*${CIL_VERSION}-*.tar.bz2`
+  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}-*.tar.bz2`
 fi
 
 if [[ -d recipe ]]; then
@@ -119,7 +117,7 @@ if [[ -d recipe ]]; then
   # call with --output generates the files being created
   #--output bug work around
   #export REG_FILES=$REG_FILES`eval conda build recipe "$CCPI_BUILD_ARGS" --output`$'\n'
-  export REG_FILES=`ls ${CONDA_PREFIX}/conda-bld/linux-64/*${CIL_VERSION}-*.tar.bz2`
+  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}-*.tar.bz2`
 fi
 
 echo files created: $REG_FILES
