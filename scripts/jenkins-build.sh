@@ -141,9 +141,7 @@ if [[ -n ${CCPI_CONDA_TOKEN} ]]; then
           # upload with dev label
           anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --force --label dev
         else
-          # upload to main and dev
-          anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --force --label dev
-          anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --label main
+          anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --force --label main
         fi
       fi  
     done <<< "$REG_FILES"
