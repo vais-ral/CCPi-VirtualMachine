@@ -42,35 +42,37 @@ then
 else
   # define CIL_VERSION from last git tag, remove first char ('v') and leave rest
   export CIL_VERSION=`git tag | xargs -I@ git log --format=format:"%at @%n" -1 @ | sort -V | awk '{print $2}' | tail -n 1 | tr -d '/s/v//g'`
-  if [[ -z "${CIL_VERSION}" ]]
-  then
-    echo "Found this CIL_VERSION ${CIL_VERSION} <<"
-    #git describe --tags
-    git tag | xargs -I@ git log --format=format:"%at @%n" -1 @ | sort -V | awk '{print $2}' | tail -n 1 | tr -d '/s/v//g'
-    echo CIL_VERSION not found: exiting
-    exit 1
+fi
+
+if [[ -z "${CIL_VERSION}" ]]
+then
+  echo "Found this CIL_VERSION ${CIL_VERSION} <<"
+  #git describe --tags
+  git tag | xargs -I@ git log --format=format:"%at @%n" -1 @ | sort -V | awk '{print $2}' | tail -n 1 | tr -d '/s/v//g'
+  echo CIL_VERSION not found: exiting
+  exit 1
+else
+  echo "Found this CIL_VERSION ${CIL_VERSION} <<"
+  # dash means that it's some commit after tag release -thus will be treated as dev
+  if [ ${RELEASE} -eq '1' ] ; then 
+    echo Force Building release version: $CIL_VERSION
+    git checkout v${CIL_VERSION}
   else
-    echo "Found this CIL_VERSION ${CIL_VERSION} <<"
-    # dash means that it's some commit after tag release -thus will be treated as dev
-    if [ ${RELEASE} -eq '1' ] ; then 
-      echo Force Building release version: $CIL_VERSION
-      git checkout v${CIL_VERSION}
+    ncommits=`git rev-list  \`git rev-list --tags --no-walk --max-count=1\`..HEAD --count`
+    if [ $ncommits -gt '0' ] ; then
+    # if [[ ${CIL_VERSION} == *"-"* ]]; then
+      # detected dash means that it is dev version, 
+      # get first and second part between first dash and ignore all after other dash (usually sha)
+      # and as dash is prohibited for conda build, replace with underscore
+      # export CIL_VERSION=`echo ${CIL_VERSION} | cut -d "-" -f -2 | tr - _`    
+      export CIL_VERSION=${CIL_VERSION}_${ncommits}
+      echo Building dev version: ${CIL_VERSION}
     else
-      ncommits=`git rev-list  \`git rev-list --tags --no-walk --max-count=1\`..HEAD --count`
-      if [ $ncommits -gt '0' ] ; then
-      # if [[ ${CIL_VERSION} == *"-"* ]]; then
-        # detected dash means that it is dev version, 
-        # get first and second part between first dash and ignore all after other dash (usually sha)
-        # and as dash is prohibited for conda build, replace with underscore
-        # export CIL_VERSION=`echo ${CIL_VERSION} | cut -d "-" -f -2 | tr - _`    
-        export CIL_VERSION=${CIL_VERSION}_${ncommits}
-        echo Building dev version: ${CIL_VERSION}
-      else
-        echo Building release version: $CIL_VERSION
-      fi
+      echo Building release version: $CIL_VERSION
     fi
   fi
 fi
+
 
 # Script to builds source code in Jenkins environment
 # module try-load conda
