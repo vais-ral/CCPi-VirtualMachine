@@ -56,7 +56,7 @@ else
   # dash means that it's some commit after tag release -thus will be treated as dev
   if [ ${RELEASE} -eq '1' ] ; then 
     echo Force Building release version: $CIL_VERSION
-    git checkout tags/v${CIL_VERSION}
+    git checkout -f tags/v${CIL_VERSION}
   else
     ncommits=`git rev-list  \`git rev-list --tags --no-walk --max-count=1\`..HEAD --count`
     if [ $ncommits -gt '0' ] ; then
