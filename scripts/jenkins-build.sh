@@ -30,6 +30,9 @@ echo CCPi build
 echo called with arguments: $@
 echo CCPI_BUILD_ARGS: $CCPI_BUILD_ARGS
 
+#print GPU driver info
+nvidia-smi
+
 # define $RELEASE=0 if not defined. This means that if you pass the variable RELEASE=1 this script will checkout
 # the latest tag and build and upload that version.
 if [[ ! -n ${RELEASE} ]] ; then
