@@ -1,3 +1,6 @@
+#update kernel
+bash /vagrant/scripts/update_kernel.sh
+
 # installs ccpi from scratch
 export INSTALLDIR=/opt/ccpi
 echo Bootstrapping Conda
