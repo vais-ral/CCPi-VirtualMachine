@@ -135,7 +135,8 @@ fi
 # upload to anaconda only if token is defined
 if [[ -n ${CCPI_CONDA_TOKEN} ]]; then
   if [[ ${GIT_BRANCH} == "refs/heads/master" ]] || [ ${RELEASE} -eq '1' ] ; then
-    conda install anaconda-client
+    conda create -n upload anaconda-client python=3.8 
+    conda activate upload
     while read -r outfile; do
       ## fix #22 anaconda error empty filename
       #export total_uploads="${outfile} ${REG_FILES}"
