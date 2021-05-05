@@ -30,7 +30,7 @@ echo CCPi build
 echo called with arguments: $@
 echo CCPI_BUILD_ARGS: $CCPI_BUILD_ARGS
 
-# If NO_GUI = false then don't print GPU driver info
+# If NO_GUI = true then don't print GPU driver info
 if [[ ! -n ${NO_GUI} ]] || [ ${NO_GUI} = false ]; then
   nvidia-smi
 fi
