@@ -35,6 +35,10 @@ if [[ ! -n ${NO_GUI} ]] || [ ${NO_GUI} = false ]; then
   nvidia-smi
 fi
 
+if [[ ! -n ${RECIPE_PATH} ]] ; then
+  export RECIPE_PATH=Wrappers/Python/conda-recipe
+fi
+
 # define $RELEASE=0 if not defined. This means that if you pass the variable RELEASE=1 this script will checkout
 # the latest tag and build and upload that version.
 if [[ ! -n ${RELEASE} ]] ; then
@@ -111,8 +115,8 @@ else
 fi
 # need to call first build
 
-if [[ -d Wrappers/Python/conda-recipe ]]; then
-  eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" "$@"
+if [[ -d ${RECIPE_PATH} ]]; then
+  eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
   # call with --output generates the files being created
   #export REG_FILES=$REG_FILES`eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" --output`$'\n'
   #--output bug work around
