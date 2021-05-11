@@ -26,7 +26,7 @@
 # - some commit can be explicitly tagged including '_' char and something after, then it is considered as 'dev' version
 # CCPI_CONDA_TOKEN - token to upload binary builds to anaconda 
 # - it detects the branch under which the CCPi is build, master is uploaded to anaconda channel, non-master branch isn't
-# NO_GUI - if set to true, GPU driver information is not printed
+# NO_GPU - if set to true, GPU driver information is not printed
 # RECIPE_PATH - if set, uses this as the path to the conda recipe instead of Wrappers/Python/conda-recipe
 echo CCPi build 
 echo called with arguments: $@
