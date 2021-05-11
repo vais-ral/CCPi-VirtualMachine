@@ -26,12 +26,20 @@
 # - some commit can be explicitly tagged including '_' char and something after, then it is considered as 'dev' version
 # CCPI_CONDA_TOKEN - token to upload binary builds to anaconda 
 # - it detects the branch under which the CCPi is build, master is uploaded to anaconda channel, non-master branch isn't
+# NO_GPU - if set to true, GPU driver information is not printed
+# RECIPE_PATH - if set, uses this as the path to the conda recipe instead of Wrappers/Python/conda-recipe
 echo CCPi build 
 echo called with arguments: $@
 echo CCPI_BUILD_ARGS: $CCPI_BUILD_ARGS
 
-#print GPU driver info
-nvidia-smi
+# If NO_GPU = true then don't print GPU driver info
+if [[ ! -n ${NO_GPU} ]] || [ ${NO_GPU} = false ]; then
+  nvidia-smi
+fi
+
+if [[ ! -n ${RECIPE_PATH} ]] ; then
+  export RECIPE_PATH=Wrappers/Python/conda-recipe
+fi
 
 # define $RELEASE=0 if not defined. This means that if you pass the variable RELEASE=1 this script will checkout
 # the latest tag and build and upload that version.
@@ -111,8 +119,8 @@ else
 fi
 # need to call first build
 
-if [[ -d Wrappers/Python/conda-recipe ]]; then
-  eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" "$@"
+if [[ -d ${RECIPE_PATH} ]]; then
+  eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
   # call with --output generates the files being created
   #export REG_FILES=$REG_FILES`eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" --output`$'\n'
   #--output bug work around
