@@ -76,6 +76,8 @@ else
   fi
 fi
 
+# print the latest git log message
+git log -n 1
 
 # Script to builds source code in Jenkins environment
 # module try-load conda
