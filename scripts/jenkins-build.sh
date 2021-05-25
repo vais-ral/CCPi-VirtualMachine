@@ -124,7 +124,7 @@ if [[ -d ${RECIPE_PATH} ]]; then
   # call with --output generates the files being created
   #export REG_FILES=$REG_FILES`eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" --output`$'\n'
   #--output bug work around
-  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}-*.tar.bz2`
+  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}*${ncommits}.tar.bz2`
 fi
 
 if [[ -d recipe ]]; then
