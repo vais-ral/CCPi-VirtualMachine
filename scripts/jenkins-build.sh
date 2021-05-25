@@ -76,8 +76,8 @@ else
       # get first and second part between first dash and ignore all after other dash (usually sha)
       # and as dash is prohibited for conda build, replace with underscore
       # export CIL_VERSION=`echo ${CIL_VERSION} | cut -d "-" -f -2 | tr - _`    
-      export CIL_VERSION=${CIL_VERSION}_${ncommits}
-      echo Building dev version: ${CIL_VERSION}
+      # export CIL_VERSION=${CIL_VERSION}_${ncommits}
+      echo Building dev version: ${CIL_VERSION} ${ncommits}
     else
       echo Building release version: $CIL_VERSION
     fi
@@ -124,7 +124,7 @@ if [[ -d ${RECIPE_PATH} ]]; then
   # call with --output generates the files being created
   #export REG_FILES=$REG_FILES`eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" --output`$'\n'
   #--output bug work around
-  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}-*.tar.bz2`
+  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}*${ncommits}.tar.bz2`
 fi
 
 if [[ -d recipe ]]; then
@@ -132,7 +132,7 @@ if [[ -d recipe ]]; then
   # call with --output generates the files being created
   #--output bug work around
   #export REG_FILES=$REG_FILES`eval conda build recipe "$CCPI_BUILD_ARGS" --output`$'\n'
-  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}-*.tar.bz2`
+  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}*${ncommits}.tar.bz2`
 fi
 
 echo files created: $REG_FILES
