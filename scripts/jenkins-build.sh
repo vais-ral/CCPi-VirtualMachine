@@ -152,7 +152,7 @@ if [[ -n ${CCPI_CONDA_TOKEN} ]]; then
       echo uploading file ${outfile}
       if [[ ! -z "${outfile}" ]]; then
       ##if >0 commit (some _ in version) then marking as dev build
-        if [[ $CIL_VERSION == *"_"* ]]; then
+        if [[ ! ${ncommits} == "0" ]]; then
           # upload with dev label
           anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --force --label dev
         else
