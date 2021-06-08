@@ -37,6 +37,14 @@ if [[ ! -n ${NO_GPU} ]] || [ ${NO_GPU} = false ]; then
   nvidia-smi
 fi
 
+# set test Python and NumPy version
+if [[ ! -n ${TEST_PY} ]] ; then
+  export TEST_PY='3.6'
+fi
+if [[ ! -n ${TEST_NP} ]] ; then
+  export TEST_NP='1.15'
+fi
+
 if [[ ! -n ${RECIPE_PATH} ]] ; then
   export RECIPE_PATH=Wrappers/Python/conda-recipe
 fi
@@ -125,7 +133,7 @@ if [[ -d ${RECIPE_PATH} ]]; then
     eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
   else
     eval conda build --no-test ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
-    eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@" --python=3.7 --numpy=1.18
+    eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@" --python=${TEST_PY} --numpy=${TEST_NP}
   fi
   # call with --output generates the files being created
   #export REG_FILES=$REG_FILES`eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" --output`$'\n'
@@ -139,7 +147,7 @@ if [[ -d recipe ]]; then
     eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
   else
     eval conda build --no-test ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
-    eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@" --python=3.7 --numpy=1.18
+    eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@" --python=${TEST_PY} --numpy=${TEST_NP}
   fi
   # call with --output generates the files being created
   #--output bug work around
