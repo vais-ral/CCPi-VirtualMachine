@@ -129,7 +129,7 @@ fi
 
 if [[ -d ${RECIPE_PATH} ]]; then
   ##if >0 commit (some _ in version) then marking as dev build
-  if [[ ! ${ncommits} == "0" ]]; then
+  if [[ ${ncommits} == "0" ]]; then
     eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
   else
     eval conda build --no-test ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
@@ -143,7 +143,7 @@ fi
 
 if [[ -d recipe ]]; then
   ##if >0 commit (some _ in version) then marking as dev build
-  if [[ ! ${ncommits} == "0" ]]; then
+  if [[ ${ncommits} == "0" ]]; then
     eval conda build recipe "$CCPI_BUILD_ARGS" "$@"
   else
     eval conda build --no-test recipe "$CCPI_BUILD_ARGS" "$@"
