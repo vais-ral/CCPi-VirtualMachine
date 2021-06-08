@@ -144,10 +144,10 @@ fi
 if [[ -d recipe ]]; then
   ##if >0 commit (some _ in version) then marking as dev build
   if [[ ! ${ncommits} == "0" ]]; then
-    eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
+    eval conda build recipe "$CCPI_BUILD_ARGS" "$@"
   else
-    eval conda build --no-test ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
-    eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@" --python=${TEST_PY} --numpy=${TEST_NP}
+    eval conda build --no-test recipe "$CCPI_BUILD_ARGS" "$@"
+    eval conda build recipe "$CCPI_BUILD_ARGS" "$@" --python=${TEST_PY} --numpy=${TEST_NP}
   fi
   # call with --output generates the files being created
   #--output bug work around
