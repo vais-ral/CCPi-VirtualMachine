@@ -120,7 +120,13 @@ fi
 # need to call first build
 
 if [[ -d ${RECIPE_PATH} ]]; then
-  eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
+  ##if >0 commit (some _ in version) then marking as dev build
+  if [[ ! ${ncommits} == "0" ]]; then
+    eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
+  else
+    eval conda build --no-test ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
+    eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@" --python=3.7 --numpy=1.18
+  fi
   # call with --output generates the files being created
   #export REG_FILES=$REG_FILES`eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" --output`$'\n'
   #--output bug work around
@@ -128,7 +134,13 @@ if [[ -d ${RECIPE_PATH} ]]; then
 fi
 
 if [[ -d recipe ]]; then
-  eval conda build recipe "$CCPI_BUILD_ARGS" "$@"
+  ##if >0 commit (some _ in version) then marking as dev build
+  if [[ ! ${ncommits} == "0" ]]; then
+    eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
+  else
+    eval conda build --no-test ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
+    eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@" --python=3.7 --numpy=1.18
+  fi
   # call with --output generates the files being created
   #--output bug work around
   #export REG_FILES=$REG_FILES`eval conda build recipe "$CCPI_BUILD_ARGS" --output`$'\n'
