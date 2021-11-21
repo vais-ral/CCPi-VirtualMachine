@@ -132,7 +132,10 @@ if [[ -d recipe ]]; then
   # call with --output generates the files being created
   #--output bug work around
   #export REG_FILES=$REG_FILES`eval conda build recipe "$CCPI_BUILD_ARGS" --output`$'\n'
+  
+
   export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}*${ncommits}.tar.bz2`
+  export REG_FILES=$REG_FILES`ls /home/jenkins/conda-bld/noarch/*${CIL_VERSION}*${ncommits}.tar.bz2`
 fi
 
 echo files created: $REG_FILES
