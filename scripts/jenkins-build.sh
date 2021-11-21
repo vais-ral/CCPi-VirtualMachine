@@ -121,23 +121,22 @@ fi
 
 if [[ -d ${RECIPE_PATH} ]]; then
   eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
-  # call with --output generates the files being created
-  #export REG_FILES=$REG_FILES`eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" --output`$'\n'
-  #--output bug work around
 fi
 
 if [[ -d recipe ]]; then
   eval conda build recipe "$CCPI_BUILD_ARGS" "$@"
-  # call with --output generates the files being created
-  #--output bug work around
-  #export REG_FILES=$REG_FILES`eval conda build recipe "$CCPI_BUILD_ARGS" --output`$'\n'
 fi
 
-if [[ -d "/home/jenkins/conda-bld/linux-64" ]]; then
+if ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}*.tar.bz2 1> /dev/null 2>&1; then
   export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}*.tar.bz2`
-elif [[ -d "/home/jenkins/conda-bld/noarch" ]]; then
+elif ls /home/jenkins/conda-bld/noarch/*${CIL_VERSION}*.tar.bz2 1> /dev/null 2>&1; then
   export REG_FILES=`ls /home/jenkins/conda-bld/noarch/*${CIL_VERSION}*.tar.bz2`
+else
+  REG_FILES=""
+  echo files not found
 fi
+
+
   
 echo files created: $REG_FILES
 
