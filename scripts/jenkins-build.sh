@@ -68,20 +68,20 @@ else
   if [ ${RELEASE} -eq '1' ] ; then 
     echo Force Building release version: $CIL_VERSION
     git checkout -f tags/v${CIL_VERSION}
-  else
-    ncommits=`git rev-list  \`git rev-list --tags --no-walk --max-count=1\`..HEAD --count`
-    if [ $ncommits -gt '0' ] ; then
-    # if [[ ${CIL_VERSION} == *"-"* ]]; then
-      # detected dash means that it is dev version, 
-      # get first and second part between first dash and ignore all after other dash (usually sha)
-      # and as dash is prohibited for conda build, replace with underscore
-      # export CIL_VERSION=`echo ${CIL_VERSION} | cut -d "-" -f -2 | tr - _`    
-      # export CIL_VERSION=${CIL_VERSION}_${ncommits}
-      echo Building dev version: ${CIL_VERSION} ${ncommits}
-    else
-      echo Building release version: $CIL_VERSION
-    fi
   fi
+  ncommits=`git rev-list  \`git rev-list --tags --no-walk --max-count=1\`..HEAD --count`
+  if [ $ncommits -gt '0' ] ; then
+  # if [[ ${CIL_VERSION} == *"-"* ]]; then
+    # detected dash means that it is dev version, 
+    # get first and second part between first dash and ignore all after other dash (usually sha)
+    # and as dash is prohibited for conda build, replace with underscore
+    # export CIL_VERSION=`echo ${CIL_VERSION} | cut -d "-" -f -2 | tr - _`    
+    # export CIL_VERSION=${CIL_VERSION}_${ncommits}
+    echo Building dev version: ${CIL_VERSION} ${ncommits}
+  else
+    echo Building release version: $CIL_VERSION
+  fi
+  
 fi
 
 # print the latest git log message
