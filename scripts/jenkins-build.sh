@@ -52,8 +52,8 @@ then
   echo Using defined version: $CIL_VERSION
 else
   # define CIL_VERSION from last git tag, remove first char ('v') and leave rest
-  export CIL_VERSION=`git tag | xargs -I@ git log --format=format:"%at @%n" -1 @ | sort -V | awk '{print $2}' | tail -n 1 | tr -d '/s/v//g'`
-fi
+  export CIL_VERSION=`git tag --sort=version:refname | xargs -I@ git log --format=format:"%at @%n" -1 @ | sort -V | awk '{print $2}' | tail -n 1 | tr -d '/s/v//g'`
+fi 
 
 if [[ -z "${CIL_VERSION}" ]]
 then
