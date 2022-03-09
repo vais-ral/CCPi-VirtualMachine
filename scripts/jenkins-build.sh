@@ -157,9 +157,9 @@ if [[ -n ${CCPI_CONDA_TOKEN} ]]; then
       ##if >0 commit (some _ in version) then marking as dev build
         if [[ ! ${ncommits} == "0" ]]; then
           # upload with dev label
-          anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --force --label dev
+          anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --label dev
         else
-          anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --force --label main
+          anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --label main
         fi
       fi  
     done <<< "$REG_FILES"
