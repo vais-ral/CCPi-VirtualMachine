@@ -47,13 +47,15 @@ then
 fi
 
 # find previous tag and count number of commits since
-export CIL_PREV_TAG=$(git describe --tags --abbrev=0 | tr -d '/s/v//g' )
-ncommits=$(git rev-list v${CIL_PREV_TAG}..HEAD --count)
+export CIL_VERSION=$(git describe --tags --abbrev=0 | tr -d '/s/v//g' )
+ncommits=$(git rev-list v${CIL_VERSION}..HEAD --count)
 
 if [ $ncommits -gt '0' ] ; then
-  echo Building dev version: ${CIL_PREV_TAG}_${ncommits}
+  echo Building dev version: ${CIL_VERSION}_${ncommits}
+
 else
-  echo Building release version: $CIL_PREV_TAG
+  echo Building release version: $CIL_VERSION
+
 fi
 
 # print the latest git log message
@@ -97,10 +99,10 @@ if [[ -d recipe ]]; then
   eval conda build recipe "$CCPI_BUILD_ARGS" "$@"
 fi
 
-if ls /home/jenkins/conda-bld/linux-64/*${CIL_PREV_TAG}*.tar.bz2 1> /dev/null 2>&1; then
-  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_PREV_TAG}*.tar.bz2`
-elif ls /home/jenkins/conda-bld/noarch/*${CIL_PREV_TAG}*.tar.bz2 1> /dev/null 2>&1; then
-  export REG_FILES=`ls /home/jenkins/conda-bld/noarch/*${CIL_PREV_TAG}*.tar.bz2`
+if ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}*.tar.bz2 1> /dev/null 2>&1; then
+  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}*.tar.bz2`
+elif ls /home/jenkins/conda-bld/noarch/*${CIL_VERSION}*.tar.bz2 1> /dev/null 2>&1; then
+  export REG_FILES=`ls /home/jenkins/conda-bld/noarch/*${CIL_VERSION}*.tar.bz2`
 else
   REG_FILES=""
   echo files not found
