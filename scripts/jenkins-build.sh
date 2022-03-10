@@ -47,8 +47,8 @@ then
 fi
 
 # find previous tag and count number of commits since
-export CIL_PREV_TAG=$(git describe --tags --abbrev=0)
-ncommits=$(git rev-list ${CIL_PREV_TAG}..HEAD --count)
+export CIL_PREV_TAG=$(git describe --tags --abbrev=0 | tr -d '/s/v//g' )
+ncommits=$(git rev-list v${CIL_PREV_TAG}..HEAD --count)
 
 if [ $ncommits -gt '0' ] ; then
   echo Building dev version: ${CIL_PREV_TAG}_${ncommits}
