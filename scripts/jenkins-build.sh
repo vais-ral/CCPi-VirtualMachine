@@ -50,11 +50,12 @@ fi
 export CIL_VERSION=$(git describe --tags --abbrev=0 | tr -d '/s/v//g' )
 ncommits=$(git rev-list v${CIL_VERSION}..HEAD --count)
 
-if [ $ncommits -gt '0' ] ; then
+if [ ${ncommits} -gt '0' ] ; then
+  #this is not used again here, but some of our build scripts use the environment variable `CIL_VERSION`
   CIL_VERSION=${CIL_VERSION}_${ncommits}
   echo Building dev version: ${CIL_VERSION}
 else
-  echo Building release version: $CIL_VERSION
+  echo Building release version: ${CIL_VERSION}
 fi
 
 # print the latest git log message
