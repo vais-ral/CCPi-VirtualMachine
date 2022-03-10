@@ -47,7 +47,7 @@ then
 fi
 
 # find previous tag and count number of commits since
-export CIL_PREV_TAG=git describe --tags --abbrev=0
+export CIL_PREV_TAG=$(git describe --tags --abbrev=0)
 ncommits=$(git rev-list ${CIL_PREV_TAG}..HEAD --count)
 
 if [ $ncommits -gt '0' ] ; then
