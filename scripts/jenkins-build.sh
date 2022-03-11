@@ -47,14 +47,15 @@ then
 fi
 
 # find previous tag and count number of commits since
-export CIL_VERSION=$(git describe --tags --abbrev=0 | tr -d '/s/v//g' )
+export CIL_TAG_PREV=$(git describe --tags --abbrev=0 | tr -d '/s/v//g' )
 ncommits=$(git rev-list v${CIL_VERSION}..HEAD --count)
 
 if [ ${ncommits} -gt '0' ] ; then
-  #this is not used again here, but some of our build scripts use the environment variable `CIL_VERSION`
-  CIL_VERSION=${CIL_VERSION}_${ncommits}
+  #CIL_VERSION is not used here, but some of our build scripts use the environment variable `CIL_VERSION`
+  CIL_VERSION=${CIL_TAG_PREV}_${ncommits}
   echo Building dev version: ${CIL_VERSION}
 else
+  CIL_VERSION=${CIL_TAG_PREV}
   echo Building release version: ${CIL_VERSION}
 fi
 
@@ -99,10 +100,10 @@ if [[ -d recipe ]]; then
   eval conda build recipe "$CCPI_BUILD_ARGS" "$@"
 fi
 
-if ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}*.tar.bz2 1> /dev/null 2>&1; then
-  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}*.tar.bz2`
-elif ls /home/jenkins/conda-bld/noarch/*${CIL_VERSION}*.tar.bz2 1> /dev/null 2>&1; then
-  export REG_FILES=`ls /home/jenkins/conda-bld/noarch/*${CIL_VERSION}*.tar.bz2`
+if ls /home/jenkins/conda-bld/linux-64/*${CIL_TAG_PREV}*.tar.bz2 1> /dev/null 2>&1; then
+  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_TAG_PREV}*.tar.bz2`
+elif ls /home/jenkins/conda-bld/noarch/*${CIL_TAG_PREV}*.tar.bz2 1> /dev/null 2>&1; then
+  export REG_FILES=`ls /home/jenkins/conda-bld/noarch/*${CIL_TAG_PREV}*.tar.bz2`
 else
   REG_FILES=""
   echo files not found
