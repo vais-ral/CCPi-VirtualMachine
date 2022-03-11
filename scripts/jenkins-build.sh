@@ -42,7 +42,7 @@ fi
 
 if [[ -n ${CIL_TAG} ]]
 then
-  echo Using defined version: $CIL_TAG 
+  echo Using defined version: ${CIL_TAG}
   git checkout -f ${CIL_TAG}
 fi
 
@@ -52,10 +52,10 @@ ncommits=$(git rev-list v${CIL_TAG_PREV}..HEAD --count)
 
 if [ ${ncommits} -gt '0' ] ; then
   #CIL_VERSION is not used here, but some of our build scripts use the environment variable `CIL_VERSION`
-  CIL_VERSION=${CIL_TAG_PREV}_${ncommits}
+  export CIL_VERSION=${CIL_TAG_PREV}_${ncommits}
   echo Building dev version: ${CIL_VERSION}
 else
-  CIL_VERSION=${CIL_TAG_PREV}
+  export CIL_VERSION=${CIL_TAG_PREV}
   echo Building release version: ${CIL_VERSION}
 fi
 
