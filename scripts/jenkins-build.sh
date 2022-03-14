@@ -17,13 +17,12 @@
 #                  binaries will be uploaded to anaconda channel together with main build
 # CCPI_BUILD_ARGS - passed to conda build as `conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS"`
 #   e.g. CCPI_BUILD_ARGS="-c ccpi -c conda-forge";
-# CIL_VERSION - version of this build, it will be used to label it within multiple places during build
-# - if CIL_VERSION is not expliticly defined, then version is determined from `git describe --tags`
+# CIL_TAG - The version to build. Is specified will build and upload requested tag/commit.
+# - if CIL_TAG is not defined, then version is determined from `git describe --tags`
 #   note that it contains information about last tag and number of commits after it.
-#   thus e.g. last tag is `0.10.4` and current commit is 3 after this tag, then version is `0.10.4_3`
+#   thus e.g. last tag is `0.10.4` and current commit is 3 after this tag, then version is `0.10.4_3` is used
 # - if the version is release (no number after '_'), anaconda upload is production
 # - if the version is not release (number of commits after '_') then anaconda upload is labeled as 'dev'
-# - some commit can be explicitly tagged including '_' char and something after, then it is considered as 'dev' version
 # CCPI_CONDA_TOKEN - token to upload binary builds to anaconda 
 # - it detects the branch under which the CCPi is build, master is uploaded to anaconda channel, non-master branch isn't
 # NO_GPU - if set to true, GPU driver information is not printed
@@ -33,55 +32,31 @@ echo called with arguments: $@
 echo CCPI_BUILD_ARGS: $CCPI_BUILD_ARGS
 
 # If NO_GPU = true then don't print GPU driver info
-if [[ ! -n ${NO_GPU} ]] || [ ${NO_GPU} = false ]; then
+if [[ -z ${NO_GPU} ]] || [ ${NO_GPU} = false ]; then
   nvidia-smi
 fi
 
-if [[ ! -n ${RECIPE_PATH} ]] ; then
+if [[ -z ${RECIPE_PATH} ]] ; then
   export RECIPE_PATH=Wrappers/Python/conda-recipe
 fi
 
-# define $RELEASE=0 if not defined. This means that if you pass the variable RELEASE=1 this script will checkout
-# the latest tag and build and upload that version.
-if [[ ! -n ${RELEASE} ]] ; then
-  export RELEASE='0'
+if [[ -n ${CIL_TAG} ]]
+then
+  echo Using defined version: ${CIL_TAG}
+  git checkout -f ${CIL_TAG}
 fi
 
-if [[ -n ${CIL_VERSION} ]]
-then
-  echo Using defined version: $CIL_VERSION
-else
-  # define CIL_VERSION from last git tag, remove first char ('v') and leave rest
-  export CIL_VERSION=`git tag | xargs -I@ git log --format=format:"%at @%n" -1 @ | sort -V | awk '{print $2}' | tail -n 1 | tr -d '/s/v//g'`
-fi
+# find previous tag and count number of commits since
+export CIL_TAG_PREV=$(git describe --tags --abbrev=0 | tr -d '/s/v//g' )
+ncommits=$(git rev-list v${CIL_TAG_PREV}..HEAD --count)
 
-if [[ -z "${CIL_VERSION}" ]]
-then
-  echo "Found this CIL_VERSION ${CIL_VERSION} <<"
-  #git describe --tags
-  git tag | xargs -I@ git log --format=format:"%at @%n" -1 @ | sort -V | awk '{print $2}' | tail -n 1 | tr -d '/s/v//g'
-  echo CIL_VERSION not found: exiting
-  exit 1
+if [ ${ncommits} -gt '0' ] ; then
+  #CIL_VERSION is not used here, but some of our build scripts use the environment variable `CIL_VERSION`
+  export CIL_VERSION=${CIL_TAG_PREV}_${ncommits}
+  echo Building dev version: ${CIL_VERSION}
 else
-  echo "Found this CIL_VERSION ${CIL_VERSION} <<"
-  # dash means that it's some commit after tag release -thus will be treated as dev
-  if [ ${RELEASE} -eq '1' ] ; then 
-    echo Force Building release version: $CIL_VERSION
-    git checkout -f tags/v${CIL_VERSION}
-  fi
-  ncommits=`git rev-list  \`git rev-list --tags --no-walk --max-count=1\`..HEAD --count`
-  if [ $ncommits -gt '0' ] ; then
-  # if [[ ${CIL_VERSION} == *"-"* ]]; then
-    # detected dash means that it is dev version, 
-    # get first and second part between first dash and ignore all after other dash (usually sha)
-    # and as dash is prohibited for conda build, replace with underscore
-    # export CIL_VERSION=`echo ${CIL_VERSION} | cut -d "-" -f -2 | tr - _`    
-    # export CIL_VERSION=${CIL_VERSION}_${ncommits}
-    echo Building dev version: ${CIL_VERSION} ${ncommits}
-  else
-    echo Building release version: $CIL_VERSION
-  fi
-  
+  export CIL_VERSION=${CIL_TAG_PREV}
+  echo Building release version: ${CIL_VERSION}
 fi
 
 # print the latest git log message
@@ -106,11 +81,9 @@ GIT_BRANCH=`git rev-parse --symbolic-full-name HEAD`
 echo on branch ${GIT_BRANCH}
 cat .git/HEAD
 
-# presume that git clone is done before this script is launched, if not, uncomment
-#git clone https://github.com/vais-ral/CCPi-Regularisation-Toolkit
 conda install -y conda-build
-#cd CCPi-Regularisation-Toolkit # already there by jenkins
 
+#This may be removed in future
 if [[ -n ${CCPI_PRE_BUILD} ]]; then
   eval conda build "${CCPI_PRE_BUILD}"
   export REG_FILES=`eval conda build ${CCPI_PRE_BUILD} --output`$'\n' 
@@ -127,16 +100,14 @@ if [[ -d recipe ]]; then
   eval conda build recipe "$CCPI_BUILD_ARGS" "$@"
 fi
 
-if ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}*.tar.bz2 1> /dev/null 2>&1; then
-  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}*.tar.bz2`
-elif ls /home/jenkins/conda-bld/noarch/*${CIL_VERSION}*.tar.bz2 1> /dev/null 2>&1; then
-  export REG_FILES=`ls /home/jenkins/conda-bld/noarch/*${CIL_VERSION}*.tar.bz2`
+if ls /home/jenkins/conda-bld/linux-64/*${CIL_TAG_PREV}*.tar.bz2 1> /dev/null 2>&1; then
+  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_TAG_PREV}*.tar.bz2`
+elif ls /home/jenkins/conda-bld/noarch/*${CIL_TAG_PREV}*.tar.bz2 1> /dev/null 2>&1; then
+  export REG_FILES=`ls /home/jenkins/conda-bld/noarch/*${CIL_TAG_PREV}*.tar.bz2`
 else
   REG_FILES=""
   echo files not found
 fi
-
-
   
 echo files created: $REG_FILES
 
@@ -147,19 +118,19 @@ fi
 
 # upload to anaconda only if token is defined
 if [[ -n ${CCPI_CONDA_TOKEN} ]]; then
-  if [[ ${GIT_BRANCH} == "refs/heads/master" ]] || [ ${RELEASE} -eq '1' ] ; then
+  #always upload if on master/main or if specific version was requested
+  if [[ ${GIT_BRANCH} == "refs/heads/master" ]] || [[ ${GIT_BRANCH} == "refs/heads/main" ]] || [[ -n ${CIL_TAG} ]] ; then
     conda install -y anaconda-client python=3.8 
     while read -r outfile; do
       ## fix #22 anaconda error empty filename
       #export total_uploads="${outfile} ${REG_FILES}"
       echo uploading file ${outfile}
       if [[ ! -z "${outfile}" ]]; then
-      ##if >0 commit (some _ in version) then marking as dev build
-        if [[ ! ${ncommits} == "0" ]]; then
-          # upload with dev label
-          anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --force --label dev
-        else
+      ##if number of commits since tag is 0, then mark as main, else dev
+        if [[ ${ncommits} == "0" ]]; then
           anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --force --label main
+        else
+          anaconda -v -t ${CCPI_CONDA_TOKEN}  upload ${outfile} --force --label dev
         fi
       fi  
     done <<< "$REG_FILES"
