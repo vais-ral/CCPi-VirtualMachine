@@ -39,10 +39,10 @@ fi
 
 # set test Python and NumPy version
 if [[ ! -n ${TEST_PY} ]] ; then
-  export TEST_PY='3.6'
+  export TEST_PY=(3.8 3.8 3.10 3.10)
 fi
 if [[ ! -n ${TEST_NP} ]] ; then
-  export TEST_NP='1.15'
+  export TEST_NP=(1.21 1.23 1.21 1.23)
 fi
 
 if [[ ! -n ${RECIPE_PATH} ]] ; then
@@ -128,12 +128,22 @@ fi
 # need to call first build
 
 if [[ -d ${RECIPE_PATH} ]]; then
-  ##if >0 commit (some _ in version) then marking as dev build
   if [[ ${ncommits} == "0" ]]; then
+    # one release build and test all
     eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
   else
+    # first build all
     eval conda build --no-test ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
-    eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@" --python=${TEST_PY} --numpy=${TEST_NP}
+    
+    #then build some with tests
+    for i in ${!TEST_PY[@]};
+    do
+      py_ver=${TEST_PY[$i]}
+      np_ver=${TEST_NP[$i]}
+
+      eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@" --python=${py_ver} --numpy=${np_ver}
+    done
+
   fi
   # call with --output generates the files being created
   #export REG_FILES=$REG_FILES`eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" --output`$'\n'
