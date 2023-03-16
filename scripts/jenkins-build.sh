@@ -154,10 +154,20 @@ fi
 if [[ -d recipe ]]; then
   ##if >0 commit (some _ in version) then marking as dev build
   if [[ ${ncommits} == "0" ]]; then
+    # one release build and test all
     eval conda build recipe "$CCPI_BUILD_ARGS" "$@"
   else
+    # first build all
     eval conda build --no-test recipe "$CCPI_BUILD_ARGS" "$@"
-    eval conda build recipe "$CCPI_BUILD_ARGS" "$@" --python=${TEST_PY} --numpy=${TEST_NP}
+    
+    #then rebuild some with tests
+    for i in ${!TEST_PY[@]};
+    do
+      py_ver=${TEST_PY[$i]}
+      np_ver=${TEST_NP[$i]}
+
+      eval conda build recipe "$CCPI_BUILD_ARGS" "$@" --python=${py_ver} --numpy=${np_ver}
+    done
   fi
   # call with --output generates the files being created
   #--output bug work around
