@@ -27,6 +27,9 @@
 # - it detects the branch under which the CCPi is build, master is uploaded to anaconda channel, non-master branch isn't
 # NO_GPU - if set to true, GPU driver information is not printed
 # RECIPE_PATH - if set, uses this as the path to the conda recipe instead of Wrappers/Python/conda-recipe
+# TEST_PY - Can be set to a bash array of versions to test if not tag i.e (3.8 3.8 3.10 3.10)
+# TEST_NP - Can be set to a bash array of versions to test if not tag i.e (1.21 1.23 1.21 1.23)
+
 echo CCPi build 
 echo called with arguments: $@
 echo CCPI_BUILD_ARGS: $CCPI_BUILD_ARGS
@@ -36,13 +39,6 @@ if [[ -z ${NO_GPU} ]] || [ ${NO_GPU} = false ]; then
   nvidia-smi
 fi
 
-# set test Python and NumPy version
-if [[ ! -n ${TEST_PY} ]] ; then
-  export TEST_PY=(3.8 3.8 3.10 3.10)
-fi
-if [[ ! -n ${TEST_NP} ]] ; then
-  export TEST_NP=(1.21 1.23 1.21 1.23)
-fi
 
 if [[ ! -n ${RECIPE_PATH} ]] ; then
   export RECIPE_PATH=Wrappers/Python/conda-recipe
@@ -91,6 +87,18 @@ cat .git/HEAD
 
 conda install -y conda-build
 
+
+# set test Python and NumPy version
+export TEST_ALL=true
+
+if [[ ${ncommits} != "0" ]]
+
+  if [[ -n ${TEST_PY} && -n ${TEST_NP} ]]; then
+    TEST_ALL=false
+  fi
+
+fi
+
 #This may be removed in future
 if [[ -n ${CCPI_PRE_BUILD} ]]; then
   eval conda build "${CCPI_PRE_BUILD}"
@@ -100,54 +108,30 @@ else
 fi
 # need to call first build
 
-if [[ -d ${RECIPE_PATH} ]]; then
 
-  if [[ ${ncommits} == "0" ]]; then
-    # one release build and test all
-    eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
-  else
-    # first build all
-    eval conda build --no-test ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
-    
-    #then build some with tests
-    for i in ${!TEST_PY[@]};
-    do
-      py_ver=${TEST_PY[$i]}
-      np_ver=${TEST_NP[$i]}
-
-      eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@" --python=${py_ver} --numpy=${np_ver}
-    done
-
-  fi
-  # call with --output generates the files being created
-  #export REG_FILES=$REG_FILES`eval conda build Wrappers/Python/conda-recipe "$CCPI_BUILD_ARGS" --output`$'\n'
-  #--output bug work around
-  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}*${ncommits}.tar.bz2`
-fi
-
+# set path to recipe if recipe exists
 if [[ -d recipe ]]; then
-  ##if >0 commit (some _ in version) then marking as dev build
-  if [[ ${ncommits} == "0" ]]; then
-    # one release build and test all
-    eval conda build recipe "$CCPI_BUILD_ARGS" "$@"
-  else
-    # first build all
-    eval conda build --no-test recipe "$CCPI_BUILD_ARGS" "$@"
-    
-    #then rebuild some with tests
-    for i in ${!TEST_PY[@]};
-    do
-      py_ver=${TEST_PY[$i]}
-      np_ver=${TEST_NP[$i]}
-
-      eval conda build recipe "$CCPI_BUILD_ARGS" "$@" --python=${py_ver} --numpy=${np_ver}
-    done
-  fi
-  # call with --output generates the files being created
-  #--output bug work around
-  #export REG_FILES=$REG_FILES`eval conda build recipe "$CCPI_BUILD_ARGS" --output`$'\n'
-  export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}*${ncommits}.tar.bz2`
+  RECIPE_PATH=recipe
 fi
+
+if [[ ${TEST_ALL} == true ]]; then
+  # build and test all
+  eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
+else
+  # first build all
+  eval conda build --no-test ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@"
+  #then build some with tests
+  for i in ${!TEST_PY[@]};
+  do
+    py_ver=${TEST_PY[$i]}
+    np_ver=${TEST_NP[$i]}
+    eval conda build ${RECIPE_PATH} "$CCPI_BUILD_ARGS" "$@" --python=${py_ver} --numpy=${np_ver}
+  done
+fi
+
+# get list of created files
+export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_VERSION}*${ncommits}.tar.bz2`
+
 
 if ls /home/jenkins/conda-bld/linux-64/*${CIL_TAG_PREV}*.tar.bz2 1> /dev/null 2>&1; then
   export REG_FILES=`ls /home/jenkins/conda-bld/linux-64/*${CIL_TAG_PREV}*.tar.bz2`
