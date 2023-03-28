@@ -89,9 +89,9 @@ conda install -y conda-build
 
 
 # set test Python and NumPy version
-export TEST_ALL=true
+TEST_ALL=true
 
-if [[ ${ncommits} != "0" ]]
+if [[ ${ncommits} != "0" ]]; then
 
   if [[ -n ${TEST_PY} && -n ${TEST_NP} ]]; then
     TEST_ALL=false
