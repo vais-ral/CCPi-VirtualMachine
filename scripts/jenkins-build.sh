@@ -85,8 +85,10 @@ GIT_BRANCH=`git rev-parse --symbolic-full-name HEAD`
 echo on branch ${GIT_BRANCH}
 cat .git/HEAD
 
-conda install -y conda-build
-
+# modify conda to use libmamba and install conda-build
+conda update -n base conda
+conda install -n base -y conda-libmamba-solver conda-build
+conda config --set solver libmamba
 
 # set test Python and NumPy version
 TEST_ALL=true
