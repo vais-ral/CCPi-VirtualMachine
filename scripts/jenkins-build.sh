@@ -120,7 +120,7 @@ fi
 if [[ -n ${CCPI_CONDA_TOKEN} ]]; then
   #always upload if on master/main or if specific version was requested
   if [[ ${GIT_BRANCH} == "refs/heads/master" ]] || [[ ${GIT_BRANCH} == "refs/heads/main" ]] || [[ -n ${CIL_TAG} ]] ; then
-    conda install -y anaconda-client python=3.8 
+    conda install -y anaconda-client
     while read -r outfile; do
       ## fix #22 anaconda error empty filename
       #export total_uploads="${outfile} ${REG_FILES}"
