@@ -48,7 +48,7 @@ fi
 
 # find previous tag and count number of commits since
 export CIL_TAG_PREV=$(git describe --tags --abbrev=0 | tr -d '/s/v//g' )
-ncommits=$(git rev-list v${CIL_TAG_PREV}..HEAD --count)
+ncommits=$(git rev-list v${CIL_TAG_PREV}..HEAD --count || git rev-list ${CIL_TAG_PREV}..HEAD --count)
 
 if [ ${ncommits} -gt '0' ] ; then
   #CIL_VERSION is not used here, but some of our build scripts use the environment variable `CIL_VERSION`
