@@ -116,7 +116,7 @@ cat .git/HEAD
 
 # presume that git clone is done before this script is launched, if not, uncomment
 #git clone https://github.com/vais-ral/CCPi-Regularisation-Toolkit
-conda install -y conda-build
+conda install -y conda-build git
 
 # increase the package timeout option
 conda config --set remote_read_timeout_secs 120
