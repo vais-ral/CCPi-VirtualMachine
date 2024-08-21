@@ -84,7 +84,7 @@ GIT_BRANCH=`git rev-parse --symbolic-full-name HEAD`
 echo on branch ${GIT_BRANCH}
 cat .git/HEAD
 
-conda install -y conda-build
+conda install -y conda-build git
 
 #This may be removed in future
 if [[ -n ${CCPI_PRE_BUILD} ]]; then
