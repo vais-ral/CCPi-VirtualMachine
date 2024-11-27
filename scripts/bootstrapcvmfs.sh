@@ -1,3 +1,6 @@
+#update kernel and kernel-headers
+bash /vagrant/scripts/update_kernel.sh
+
 # use ccpi from cvmfs installation
 export INSTALLDIR=/cvmfs/west-life.egi.eu/software/ccpi/latest
 bash /vagrant/scripts/installcvmfswestlife.sh
